@@ -1,0 +1,15 @@
+2013-03-23      Dohyun Kim <nomos at ktug org>
+
+	Version 1.1
+
+	* kotex.sty: package option [cjk] is not needed any more, if
+	kotexutf.sty does not exist.
+
+	* cjk-ko-doc.pdf: produced by dvipdfmx instead of pdflatex.
+
+	* Author's email address has changed.
+
+2013-02-27      Dohyun Kim <nomos at ktug org>
+
+	Initial release. Version 1.0
+

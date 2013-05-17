@@ -2,14 +2,50 @@ CJK-ko package version 1.1 (2013/03/23)
 =======================================
 
 This package supports typesetting modern Korean documents with the help
-of LaTeX2e CJK package written by Werner Lemberg.  Unlike CJK package,
-however, this package supports UTF-8 input encoding only.  Despite the
-restriction, this package provides some enhanced features focused on
-Korean typesetting culture, for instance: linebreak is allowed between
-Latin and CJK characters; users can scale and/or lower CJK characters
-for their need; and automatic Josa selection is implemented.
+of LaTeX2e CJK package written by Werner Lemberg. Though this package
+supports, unlike CJK package, only UTF-8 input encoding, it provides
+some enhanced features focused on Korean typesetting culture, for
+instance: linebreak is allowed between Latin and CJK characters; users
+can scale and/or lower CJK characters for their need; and automatic Josa
+selection is implemented.
 
 Currently this package requires nanumtype1 package as well.
+
+
+Author
+------
+
+Please report any errors or suggestions to Dohyun Kim <nomos at ktug org>
+or leave messages in the issue tracker at
+	<http://github.com/dohyunkim/cjk-ko>.
+
+
+License
+-------
+
+### GPL (Gnu General Public License):
+
+	cjkutf8-ko.sty
+	cjkutf8-josa.sty
+	cjkutf8-nanummjhanja.sty
+
+These files are derivatives of CJK package or written by the author.
+
+### LPPL (LaTeX Project Public License):
+
+	kotex.sty
+	konames-utf.sty
+	kolabels-utf.sty
+
+These files are copied or modified from ko.TeX package.
+
+### Public domain:
+
+	cjk-ko-doc.tex
+	README
+	ChangeLog
+
+See each file for more details.
 
 
 Files
@@ -32,32 +68,6 @@ Files
 	ChangeLog			-> doc/latex/cjk-ko/
 
 
-License
--------
-
-### GPL (Gnu General Public License)
-
-	cjkutf8-ko.sty
-	cjkutf8-josa.sty
-	cjkutf8-nanummjhanja.sty
-These files are derivatives of CJK package or written by the author.
-
-### LPPL (LaTeX Project Public License)
-
-	kotex.sty
-	konames-utf.sty
-	kolabels-utf.sty
-These files are copied or modified from ko.TeX package.
-
-### Public domain
-
-	cjk-ko-doc.tex
-	README
-	ChangeLog
-
-See each file for more details.
-
-
 Loading of the package
 ----------------------
 
@@ -70,24 +80,30 @@ or
 ### package options
 
 	[cjk]
+
 Option for kotex.sty.  If this option is not given and if kotexutf.sty
 does exist, kotexutf package will be loaded instead.
 
 	[hangul]
+
 Load Hangul captions. line/word spacing is adjusted as well.
 
 	[hanja]
+
 Load Hanja captions. same as [hangul] option for line/word spacing.
 
 	[nojosa]
+
 Disable automatic Josa selection
 
 	[usedotemph]
+
 Enable \dotemph command. CJKfntef.sty and CJKulem.sty will be loaded
 as well.
 
 	[usecjkt1font]
-Latin characters are typeset by CJK font.  Only Nanum T1 font is
+
+Latin characters are typeset by CJK font. Only Nanum T1 font is
 currently available.
 
 
@@ -152,11 +168,6 @@ Same as ko.TeX package:
 
 	\jaso \gana \ojaso \ogana \pjaso \pgana \onum \pnum \oeng \peng
 	\hnum \Hnum \hroman \hRoman \hNum \hanjanum
-
-
-Author
-------
-Please report any errors or suggestions to Dohyun Kim <nomos at ktug org>
 
 
 *END of README*

@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-ko}[2013/06/28 v1.1 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2013/06/29 v1.2 Hangul typesetting on CJKutf8]
 
 \ifx\eTeXversion\relax \let\eTeXversion\undefined \fi
 \newif\if@hangul
@@ -390,6 +390,10 @@
 %%% cause:  memoir appempts to write index entries to a file
 %%% at the end of document without protecting active characters.
 %%% spotted by Juho Lee. thanks to him.
-\AtEndDocument{\let\protect\string}
+\@ifclassloaded{memoir}{
+  \AtEndDocument{\edef\@sanitize{\unexpanded\expandafter{\@sanitize
+    \let\protect\string
+  }}}
+}{}
 
 \endinput

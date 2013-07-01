@@ -17,7 +17,7 @@
 \title{\cjkko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize $<$\texttt{nomos at ktug org}$>$ \and
   \normalsize $<$\url{http://github.com/dohyunkim/cjk-ko}$>$}
-\date{Version 1.1\quad\today}
+\date{Version 1.2\quad\today}
 \begin{document}
 \maketitle
 
@@ -64,7 +64,9 @@
 	\item[\texttt{nojosa}] 자동조사 기능 끄기. 이 옵션을 주더라도
 	  자동조사 명령이 에러를 내는 건 아니다.
 	\item[\texttt{usedotemph}] \cs{dotemph} 명령 허용\\
-	  --- 이 옵션은 ulem 패키지도 부르므로 \uline{밑줄 긋기} 가능
+	  --- 이 옵션은 ulem 패키지도 부르므로 \uline{밑줄 긋기} 가능.
+	  단, \cs{normalem} 명령이 선언돼 있으므로 \cs{emph} 명령이
+	  밑줄긋기로 동작하게 하려면 \cs{ULforem} 선언이 있어야 한다.
 	\item[\texttt{usecjkt1font}] 영문자도 한글 글꼴---나눔폰트---로 식자.
 	   라틴 알파벳이 거의 없는 소설책 따위에 유용할 수 있다.
       \end{itemize}

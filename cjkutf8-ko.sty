@@ -20,6 +20,12 @@
 \ProvidesPackage{cjkutf8-ko}[2013/06/29 v1.2 Hangul typesetting on CJKutf8]
 
 \ifx\eTeXversion\relax \let\eTeXversion\undefined \fi
+\ifx\eTeXversion\undefined
+  \PackageError{cjkutf8-ko}
+    {e-TeX engine is required}
+    {Please update your TeX system to the latest distribution}
+\fi
+
 \newif\if@hangul
 \newif\if@hanja
 \let\use@josa\empty
@@ -38,9 +44,6 @@
   \RequirePackage{textcomp}
   \def\rmdefault{nanummj}
   \def\sfdefault{nanumgt}
-  \ifx\eTeXversion\undefined % TW T1 is broken
-    \g@addto@macro\ttfamily{\fontencoding{OT1}\selectfont}
-  \fi
 \fi
 
 \RequirePackage{CJKutf8}
@@ -81,12 +84,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%% dotemph
-% CJKfntef.sty requires e-TeX
-\ifx\ifcsname\undefined
-  \expandafter\let
-  \csname ifcsname\expandafter\endcsname
-  \csname iffalse\endcsname
-\fi
 % Users can redefine \dotemphchar and \dotemphraise
 \ifx\usedot@mph\undefined
   \def\dotemph{\PackageError{cjkutf8-ko}
@@ -97,8 +94,7 @@
   \RequirePackage{ulem}[2000/05/26]
   \addto@hook\UL@hook{\let\CJKglue\HangulGlue}
   \RequirePackage{CJKfntef}
-  \ifx\usecjk@@font\undefined\normalem\else % currently tex writer T1 is broken
-  \ifx\eTeXversion\undefined\else\normalem\fi\fi
+  \normalem % users should declare \ULforem to enable underlining for \emph
   \def\dotemphraise{0.2em}
   \def\dotemphchar{\bfseries\Unicode{"02}{"D9}}
   % user command: dotemph
@@ -217,53 +213,29 @@
 \sfcode96=998 % `
 \sfcode102=998 % oms {
 \sfcode123=998 % t1 {
-\ifx\eTeXversion\undefined
-  \def\CJK@testLastCJK{%
-    \global\CJK@false
-    \ifnum\lastkern=\@ne
-      \global \CJK@true
-    %%% inserted
-    \else
-      \ifhmode
-      \ifnum\lastkern=\tw@\else
-      \ifnum\lastskip=\z@ % last node is not space (?)
-      \ifnum\lastpenalty=\z@ % last node is not penalty (?)
-      \ifnum\spacefactor=998 \else % last char is not opening ascii
-	\ifx\CJK@plane\undefined\else
-	  \CJK@testPostPunct{\CJK@@@enc}{\CJK@plane}{\CJK@gtemp}%
-	\fi
-	\ifCJK@ \global\CJK@false
-	\else \CJKglue % this char is not closing cjk
-	\fi
-      \fi\fi\fi\fi\fi
-    %%% end of inserted
-    \fi}
-\else
-  \def\CJK@testLastCJK{%
-    \global\CJK@false
-    \ifnum\lastkern=\@ne
-      \global \CJK@true
-    %%% inserted
-    \else
-      \ifhmode
-      \ifnum\lastkern=\tw@\else
-      \ifnum\lastskip=\z@ % last node is not space (?)
-      \ifnum\lastpenalty=\z@ % last node is not penalty (?)
-      \ifnum\spacefactor=998 \else % last char is not opening ascii
-	\ifx\CJK@plane\undefined\else
-	  \CJK@testPostPunct{\CJK@@@enc}{\CJK@plane}{\CJK@gtemp}%
-	\fi
-	\ifCJK@
-	  \global\CJK@false
-	\else % this char is not closing cjk
-	  \ifnum\lastnodetype=10 \CJKpostmathglue % after math-off
-	  \else \CJKglue
-	  \fi
-	\fi
-      \fi\fi\fi\fi\fi
-    %%% end of inserted
-    \fi}
-\fi
+\def\CJK@testLastCJK{%
+  \global\CJK@false
+  \ifnum\lastkern=\@ne
+    \global \CJK@true
+  %%% inserted
+  \else
+    \ifhmode
+    \ifnum\lastkern=\tw@\else
+    \ifnum\lastskip=\z@ % last node is not space (?)
+    \ifnum\lastpenalty=\z@ % last node is not penalty (?)
+    \ifnum\spacefactor=998 \else % last char is not opening ascii
+      \ifx\CJK@plane\undefined\else
+	\CJK@testPostPunct{\CJK@@@enc}{\CJK@plane}{\CJK@gtemp}%
+      \fi
+      \ifCJK@
+	\global\CJK@false
+      \else % this char is not closing cjk
+	\ifnum\lastnodetype=10 \CJKpostmathglue % after math-off
+	\else \CJKglue \fi
+      \fi
+    \fi\fi\fi\fi\fi
+  %%% end of inserted
+  \fi}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % half-width puncts
@@ -349,9 +321,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%% nanummj has no hanja : texlive only
-\ifx\eTeXversion\undefined\else
-  \RequirePackage{cjkutf8-nanummjhanja}
-\fi
+\RequirePackage{cjkutf8-nanummjhanja}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%% auto-josa, light version
@@ -362,7 +332,6 @@
 \RequirePackage{kolabels-utf}
 \if@hangul
   \RequirePackage{konames-utf}
-  \ifx\eTeXversion\undefined \mathsurround=0.25ex \fi
   \linespread{1.3888}
   \footnotesep=1.3888\footnotesep
   \skip\footins=1.3888\skip\footins plus6pt minus3pt

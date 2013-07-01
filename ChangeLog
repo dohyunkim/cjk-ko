@@ -1,3 +1,13 @@
+2013-06-29      Dohyun Kim <nomos at ktug org>
+
+	Version 1.2
+
+	* cjkutf8-ko.sty: there was a clash with \makeindex of memoir class.
+	as reported by Juho Lee; codes for non-eTeX engines are removed.
+
+	* cjk-ko-doc.tex: explicitly state that [usedotemph] option declares
+	\normalem (see the manual of ulem package).
+
 2013-03-23      Dohyun Kim <nomos at ktug org>
 
 	Version 1.1

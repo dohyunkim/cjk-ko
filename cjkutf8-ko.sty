@@ -331,7 +331,7 @@
 % hangul captions, labels, and spacing
 \RequirePackage{kolabels-utf}
 \if@hangul
-  \RequirePackage{konames-utf}
+  \AtBeginDocument{\RequirePackage{konames-utf}}
   \linespread{1.3888}
   \footnotesep=1.3888\footnotesep
   \skip\footins=1.3888\skip\footins plus6pt minus3pt

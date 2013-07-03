@@ -29,7 +29,6 @@ License
 	cjkutf8-ko.sty
 	cjkutf8-josa.sty
 	cjkutf8-nanummjhanja.sty
-
 These files are derivatives of CJK package or written by the author.
 
 ### LPPL (LaTeX Project Public License):
@@ -37,7 +36,6 @@ These files are derivatives of CJK package or written by the author.
 	kotex.sty
 	konames-utf.sty
 	kolabels-utf.sty
-
 These files are copied or modified from ko.TeX package.
 
 ### Public domain:
@@ -81,29 +79,23 @@ or
 ### package options
 
 	[cjk]
-
 Option for kotex.sty.  If this option is not given and if kotexutf.sty
 does exist, kotexutf package will be loaded instead.
 
 	[hangul]
-
 Load Hangul captions. line/word spacing is adjusted as well.
 
 	[hanja]
-
 Load Hanja captions. same as [hangul] option for line/word spacing.
 
 	[nojosa]
-
 Disable automatic Josa selection
 
 	[usedotemph]
-
 Enable \dotemph command. CJKfntef.sty and CJKulem.sty will be loaded
 as well.
 
 	[usecjkt1font]
-
 Latin characters are typeset by CJK font. Only Nanum T1 font is
 currently available.
 
@@ -112,7 +104,6 @@ User commands
 -------------
 
 	\CJKscale
-
 - scale font size of CJK character
 - eg: \CJKscale{0.95}
 - cannot be used with [usecjkt1font] option
@@ -121,14 +112,12 @@ User commands
   adjusted automatically
 
 	\lowerCJKchar
-
 - lower CJK characters
 - eg: \lowerCJKchar{0.1em}
 - cannot be used with [usecjkt1font] option
 - allowed only in the preamble
 
 	\dotemph
-
 - emphasize Hangul or Hanja by putting dot above
 - eg: \dotemph{드러냄표}
 - available only when [usedotemph] option is given

@@ -1,13 +1,14 @@
-2013-06-29      Dohyun Kim <nomos at ktug org>
+2013-07-03      Dohyun Kim <nomos at ktug org>
 
 	Version 1.2
 
-	* cjkutf8-ko.sty: there was a clash with \makeindex of memoir class.
-	as reported by Juho Lee; codes for non-eTeX engines are removed; move
-	caption setting to AtBeginDocument
+	* cjkutf8-ko.sty: there was a clash with \makeindex of memoir
+	class as reported by Juho Lee;
+	move caption setting to AtBeginDocument;
+	codes for non-eTeX engines are removed.
 
-	* cjk-ko-doc.tex: explicitly state that [usedotemph] option declares
-	\normalem (see the manual of ulem package).
+	* cjk-ko-doc.tex: explicitly state that [usedotemph] option
+	declares \normalem (see the manual of ulem package).
 
 2013-03-23      Dohyun Kim <nomos at ktug org>
 

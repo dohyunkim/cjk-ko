@@ -102,7 +102,7 @@
     \CJKunderanysymbol{-\dotemphraise}{\dotemphchar}}
   \AtBeginDocument{
     \@ifpackageloaded{hyperref}{\g@addto@macro\pdfstringdefPreHook{%
-	\let\dotemph\@firstofone
+        \let\dotemph\@firstofone
     }}{}
   }
 \fi
@@ -139,32 +139,32 @@
       \@tempdimb\CJK@scale\@tempdimb %%% inserted
       \ifx\optional@arg \@empty
       \else
-	\expandafter\ifx
-	 \csname CJK@\mandatory@arg/\f@size/\the\@tempdimb\endcsname \relax
-	  \@tempdimb \optional@arg\@tempdimb
-	  #1{Font\space shape\space `\curr@fontshape'\space
-	     will\space be\MessageBreak
-	     scaled\space to\space size\space \the\@tempdimb}%
-	  \expandafter
-	   \gdef\csname CJK@\mandatory@arg/\f@size/\the\@tempdimb\endcsname{}%
-	\fi
+        \expandafter\ifx
+         \csname CJK@\mandatory@arg/\f@size/\the\@tempdimb\endcsname \relax
+          \@tempdimb \optional@arg\@tempdimb
+          #1{Font\space shape\space `\curr@fontshape'\space
+             will\space be\MessageBreak
+             scaled\space to\space size\space \the\@tempdimb}%
+          \expandafter
+          \gdef\csname CJK@\mandatory@arg/\f@size/\the\@tempdimb\endcsname{}%
+        \fi
       \fi
       \edef\external@font{%
-	\mandatory@arg\CJK@plane\space at \the\@tempdimb}%
+        \mandatory@arg\CJK@plane\space at \the\@tempdimb}%
       \xdef\font@name{%
-	\csname \curr@fontshape/\f@size/\CJK@plane\endcsname}%
+        \csname \curr@fontshape/\f@size/\CJK@plane\endcsname}%
       \expandafter\global\expandafter\let
        \csname \CJK@curr@fontshape\expandafter\endcsname
-	\csname \curr@fontshape\endcsname}
+        \csname \curr@fontshape\endcsname}
     \if@hangul % hangul is main language
       % scale space glue
       \bgroup
       \@for\reserved@a:=,\small,\footnotesize,\large,\Large,\LARGE\do{%
-	\reserved@a
-	\fontdimen2\font=\CJK@scale\fontdimen2\font
-	\fontdimen3\font=\CJK@scale\fontdimen3\font
-	\fontdimen4\font=\CJK@scale\fontdimen4\font
-	\fontdimen7\font=\CJK@scale\fontdimen7\font}
+        \reserved@a
+        \fontdimen2\font=\CJK@scale\fontdimen2\font
+        \fontdimen3\font=\CJK@scale\fontdimen3\font
+        \fontdimen4\font=\CJK@scale\fontdimen4\font
+        \fontdimen7\font=\CJK@scale\fontdimen7\font}
       \egroup
       % scale parindent, footnotesep, footins
       \parindent\CJK@scale\parindent
@@ -225,13 +225,13 @@
     \ifnum\lastpenalty=\z@ % last node is not penalty (?)
     \ifnum\spacefactor=998 \else % last char is not opening ascii
       \ifx\CJK@plane\undefined\else
-	\CJK@testPostPunct{\CJK@@@enc}{\CJK@plane}{\CJK@gtemp}%
+        \CJK@testPostPunct{\CJK@@@enc}{\CJK@plane}{\CJK@gtemp}%
       \fi
       \ifCJK@
-	\global\CJK@false
+        \global\CJK@false
       \else % this char is not closing cjk
-	\ifnum\lastnodetype=10 \CJKpostmathglue % after math-off
-	\else \CJKglue \fi
+        \ifnum\lastnodetype=10 \CJKpostmathglue % after math-off
+        \else \CJKglue \fi
       \fi
     \fi\fi\fi\fi\fi
   %%% end of inserted
@@ -285,8 +285,10 @@
   \fi}
 \def\CJKKO@opening@punct#1{\leavevmode\hbox to.5em{\hss\CJKsymbol{#1}}}
 \def\CJKKO@normal@punct#1{\leavevmode\hbox to.5em{\CJKsymbol{#1}\hss}}
-\DeclareUnicodeCharacter{00B7}
+\AtBeginDocument{
+  \DeclareUnicodeCharacter{00B7}
   {\leavevmode\kern.25em \Unicode{0}{"B7}\hskip.25em\relax}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%% lowercjkchar: eg, \lowercjkchar{-0.1em}
@@ -309,11 +311,11 @@
   \ifx\CJK@charlower\undefined\else
     \DeclareRobustCommand{\CJKsymbol}[1]{%
       \leavevmode\lower\CJK@charlower\hbox{% inserted
-	\symbol{#1}%
-	\ifCJK@bold@
-	  \hbox to \CJKboldshift{\hss\symbol{#1}}%
-	  \hbox to \CJKboldshift{\hss\symbol{#1}}%
-	\fi
+        \symbol{#1}%
+        \ifCJK@bold@
+          \hbox to \CJKboldshift{\hss\symbol{#1}}%
+          \hbox to \CJKboldshift{\hss\symbol{#1}}%
+        \fi
       }% inserted
     }
   \fi\fi

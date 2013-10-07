@@ -1,4 +1,4 @@
-CJK-ko package version 1.2 (2013/07/03)
+CJK-ko package version 1.3 (2013/10/07)
 =======================================
 
 This package supports typesetting modern Korean documents with the help
@@ -16,9 +16,9 @@ Author
 ------
 
 Please report any errors or suggestions to
-	Dohyun Kim <nomos at ktug org>
+    Dohyun Kim <nomos at ktug org>
 or leave messages in the issue tracker at:
-	<http://github.com/dohyunkim/cjk-ko>.
+    <http://github.com/dohyunkim/cjk-ko>.
 
 
 License
@@ -26,23 +26,23 @@ License
 
 ### GPL (Gnu General Public License):
 
-	cjkutf8-ko.sty
-	cjkutf8-josa.sty
-	cjkutf8-nanummjhanja.sty
+    cjkutf8-ko.sty
+    cjkutf8-josa.sty
+    cjkutf8-nanummjhanja.sty
 These files are derivatives of CJK package or written by the author.
 
 ### LPPL (LaTeX Project Public License):
 
-	kotex.sty
-	konames-utf.sty
-	kolabels-utf.sty
+    kotex.sty
+    konames-utf.sty
+    kolabels-utf.sty
 These files are copied or modified from ko.TeX package.
 
 ### Public domain:
 
-	cjk-ko-doc.tex
-	README
-	ChangeLog
+    cjk-ko-doc.tex
+    README
+    ChangeLog
 
 See each file for more details.
 
@@ -52,58 +52,61 @@ Files
 
 ### TeXinputs
 
-	cjkutf8-ko.sty			-> tex/latex/cjk-ko/
-	cjkutf8-josa.sty		-> tex/latex/cjk-ko/
-	cjkutf8-nanummjhanja.sty	-> tex/latex/cjk-ko/
-	kotex.sty			-> tex/latex/cjk-ko/
-	kolabels-utf.sty		-> tex/latex/cjk-ko/
-	konames-utf.sty			-> tex/latex/cjk-ko/
+    cjkutf8-ko.sty           -> tex/latex/cjk-ko/
+    cjkutf8-josa.sty         -> tex/latex/cjk-ko/
+    cjkutf8-nanummjhanja.sty -> tex/latex/cjk-ko/
+    kotex.sty                -> tex/latex/cjk-ko/
+    kolabels-utf.sty         -> tex/latex/cjk-ko/
+    konames-utf.sty          -> tex/latex/cjk-ko/
 
 ### Documents
 
-	cjk-ko-doc.tex			-> doc/latex/cjk-ko/
-	cjk-ko-doc.pdf			-> doc/latex/cjk-ko/
-	README				-> doc/latex/cjk-ko/
-	ChangeLog			-> doc/latex/cjk-ko/
+    cjk-ko-doc.tex           -> doc/latex/cjk-ko/
+    cjk-ko-doc.pdf           -> doc/latex/cjk-ko/
+    README                   -> doc/latex/cjk-ko/
+    ChangeLog                -> doc/latex/cjk-ko/
 
 
 Loading of the package
 ----------------------
 
-	\usepackage{cjkutf8-ko}
+    \usepackage{cjkutf8-ko}
 or
 
-	\usepackage[cjk]{kotex}
+    \usepackage[cjk]{kotex}
 
 
 ### package options
 
-	[cjk]
+    [cjk]
 Option for kotex.sty.  If this option is not given and if kotexutf.sty
 does exist, kotexutf package will be loaded instead.
 
-	[hangul]
+    [hangul]
 Load Hangul captions. line/word spacing is adjusted as well.
 
-	[hanja]
+    [hanja]
 Load Hanja captions. same as [hangul] option for line/word spacing.
 
-	[nojosa]
+    [nojosa]
 Disable automatic Josa selection
 
-	[usedotemph]
+    [usedotemph]
 Enable \dotemph command. CJKfntef.sty and CJKulem.sty will be loaded
 as well.
 
-	[usecjkt1font]
+    [usecjkt1font]
 Latin characters are typeset by CJK font. Only Nanum T1 font is
 currently available.
 
+    [mj=<font>], [gt=<font>]
+Declare Myeongjo and Gothic fonts respectively. `c70<font>.fd` should
+be existant.
 
 User commands
 -------------
 
-	\CJKscale
+    \CJKscale
 - scale font size of CJK character
 - eg: \CJKscale{0.95}
 - cannot be used with [usecjkt1font] option
@@ -111,20 +114,20 @@ User commands
 - under [hangul] option, line/word spacing and indent size are
   adjusted automatically
 
-	\lowerCJKchar
+    \lowerCJKchar
 - lower CJK characters
 - eg: \lowerCJKchar{0.1em}
 - cannot be used with [usecjkt1font] option
 - allowed only in the preamble
 
-	\dotemph
+    \dotemph
 - emphasize Hangul or Hanja by putting dot above
 - eg: \dotemph{드러냄표}
 - available only when [usedotemph] option is given
 - users can redefine these commands:
 
-	\def\dotemphchar{\Unicode{"02}{"D9}}
-	\def\dotemphraise{0.2em}
+    \def\dotemphchar{\Unicode{"02}{"D9}}
+    \def\dotemphraise{0.2em}
 
 For other commands see CJK package documents.
 
@@ -134,21 +137,21 @@ Automatic Josa selection
 
 Josa commands:
 
-	\은 \는 \이 \가 \을 \를 \와 \과 \로 \으로 \라 \이라
+    \은 \는 \이 \가 \을 \를 \와 \과 \로 \으로 \라 \이라
 
 example:
 
-	\label{fig:aaa} ... \ref{fig:aaa}\을
-	\label{fig:aaa} ... \pageref{fig:aaa}\을
-	\cite{hong}\을 ... \bibitem[홍길동\jong]{hong}
+    \label{fig:aaa} ... \ref{fig:aaa}\을
+    \label{fig:aaa} ... \pageref{fig:aaa}\을
+    \cite{hong}\을 ... \bibitem[홍길동\jong]{hong}
 
 Automatic Josa selection works correctly only after
 \ref \pageref \cite commands and after ascii characters.
 For other cases these commands are available:
 
-	\jung:  keyword is terminated by Jungseong
-	\jong:  keyword is terminated by Jongseong
-	\rieul: keyword is terminated by Jongseong Rieul
+    \jung:  keyword is terminated by Jungseong
+    \jong:  keyword is terminated by Jongseong
+    \rieul: keyword is terminated by Jongseong Rieul
 
 
 Korean counters
@@ -156,8 +159,8 @@ Korean counters
 
 Same as ko.TeX package:
 
-	\jaso \gana \ojaso \ogana \pjaso \pgana \onum \pnum \oeng \peng
-	\hnum \Hnum \hroman \hRoman \hNum \hanjanum
+    \jaso \gana \ojaso \ogana \pjaso \pgana \onum \pnum \oeng \peng
+    \hnum \Hnum \hroman \hRoman \hNum \hanjanum
 
 
 *END of README*

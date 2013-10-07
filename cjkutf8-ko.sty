@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-ko}[2013/07/03 v1.2 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2013/10/07 v1.3 Hangul typesetting on CJKutf8]
 
 \ifx\eTeXversion\relax \let\eTeXversion\undefined \fi
 \ifx\eTeXversion\undefined
@@ -35,37 +35,72 @@
 \DeclareOption{usecjkt1font}{\let\usecjk@@font\empty\@hangultrue}
 \DeclareOption{usedotemph}{\let\usedot@mph\empty}
 \DeclareOption{nojosa}{\let\use@josa\undefined}
+\DeclareOption*{\expandafter\CJKKO@userfont@option\CurrentOption=\end}
+\def\CJKKO@userfont@option#1=#2\end{%
+  \ifx\empty#2\empty
+    \PackageError{cjkutf8-ko}{Option not used: #1}{}
+  \else
+    \def\reserved@a{mj}\def\reserved@b{gt}\def\reserved@c{#1}
+    \ifx\reserved@a\reserved@c
+      \edef\CJKKO@mjfont{\CJKKO@removetrailingEQ#2}
+      \IfFileExists{c70\CJKKO@mjfont.fd}{}{%
+        \PackageError{cjkutf8-ko}{`c70\CJKKO@mjfont.fd' does not exist}{}
+        \let\CJKKO@mjfont\undefined
+      }
+    \else
+      \ifx\reserved@b\reserved@c
+        \edef\CJKKO@gtfont{\CJKKO@removetrailingEQ#2}
+        \IfFileExists{c70\CJKKO@gtfont.fd}{}{%
+          \PackageError{cjkutf8-ko}{`c70\CJKKO@gtfont.fd' does not exist}{}
+          \let\CJKKO@gtfont\undefined
+        }
+      \else
+        \PackageError{cjkutf8-ko}
+          {Unknown hangul font type: #1}
+          {Allowed font types are `mj' and `gt'}
+      \fi
+    \fi
+  \fi
+}
+\def\CJKKO@removetrailingEQ#1={#1}
 \ProcessOptions\relax
+
+\ifx\CJKKO@mjfont\undefined \def\CJKKO@mjfont{nanummj}\fi
+\ifx\CJKKO@gtfont\undefined \def\CJKKO@gtfont{nanumgt}\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % font settings
 \ifx\usecjk@@font\undefined\else
   \RequirePackage[T1]{fontenc}
   \RequirePackage{textcomp}
-  \def\rmdefault{nanummj}
-  \def\sfdefault{nanumgt}
+  \IfFileExists{t1\CJKKO@mjfont.fd}{\let\rmdefault\CJKKO@mjfont}{}
+  \IfFileExists{t1\CJKKO@gtfont.fd}{\let\sfdefault\CJKKO@gtfont}{}
 \fi
 
 \RequirePackage{CJKutf8}
 
-\g@addto@macro\rmfamily{\CJKfamily{nanummj}}
-\g@addto@macro\sffamily{\CJKfamily{nanumgt}}
-\g@addto@macro\ttfamily{\CJKfamily{nanumgt}}
+\g@addto@macro\rmfamily{\CJKfamily{\CJKKO@mjfont}}
+\g@addto@macro\sffamily{\CJKfamily{\CJKKO@gtfont}}
+\g@addto@macro\ttfamily{\CJKfamily{\CJKKO@gtfont}}
 
 \AtBeginDocument{
   \edef\reserved@a{\familydefault}
   \edef\reserved@b{\rmdefault}
   \ifx\reserved@a\reserved@b
-    \CJKfamily{nanummj}
-    \g@addto@macro\normalfont{\CJKfamily{nanummj}}
+    \CJKfamily{\CJKKO@mjfont}
+    \g@addto@macro\normalfont{\CJKfamily{\CJKKO@mjfont}}
     \if@hangul\ifx\usecjk@@font\undefined
-      \CJKKO@hangulspaceglue{t1nanummjm}% get space glue from hangul font
+      \IfFileExists{t1\CJKKO@mjfont m}{%
+        \CJKKO@hangulspaceglue{t1\CJKKO@mjfont m}% space glue from hangul font
+      }{}
     \fi\fi
   \else
-    \CJKfamily{nanumgt}
-    \g@addto@macro\normalfont{\CJKfamily{nanumgt}}
+    \CJKfamily{\CJKKO@gtfont}
+    \g@addto@macro\normalfont{\CJKfamily{\CJKKO@gtfont}}
     \if@hangul\ifx\usecjk@@font\undefined
-      \CJKKO@hangulspaceglue{t1nanumgtm}% get space glue from hangul font
+      \IfFileExists{t1\CJKKO@gtfont m}{%
+        \CJKKO@hangulspaceglue{t1\CJKKO@gtfont m}% space glue from hangul font
+      }{}
     \fi\fi
   \fi
   \let\reset@font\normalfont
@@ -114,7 +149,7 @@
 \def\CJKglue{\HangulPenalty\HangulGlue}
 \def\CJKpostmathglue{\HangulPenalty\hskip.25ex plus.1ex minus.05ex }
 \CJKspace
-\CJK@envStart{}{UTF8}{nanummj}
+\CJK@envStart{}{UTF8}{\CJKKO@mjfont}
 \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -323,7 +358,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%% nanummj has no hanja : texlive only
-\RequirePackage{cjkutf8-nanummjhanja}
+\def\CJKKO@mjdefault{nanummj}
+\ifx\CJKKO@mjfont\CJKKO@mjdefault
+  \RequirePackage{cjkutf8-nanummjhanja}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%% auto-josa, light version

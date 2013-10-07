@@ -18,9 +18,9 @@
 % MA 02110-1301 USA
 
 \ProvidesPackage{cjkutf8-nanummjhanja}
-  [2013/02/23 v1.0 UHC hanja for Nanum Myeongjo]
+  [2013/10/07 v1.3 UHC hanja for Nanum Myeongjo]
 
-\def\CJKKO@mjfamily{nanummj}
+\def\CJKKO@mjdefault{nanummj}
 \def\CJKKO@mjhanjafamily{\def\CJK@family{uhcmj}}
 
 % redefine CJK@numbToHex
@@ -34,7 +34,7 @@
    \xdef#1{%
      \hexnumber@{\count\z@}\hexnumber@{\count\tw@}}}%
   % inserted
-  \ifx\CJK@family\CJKKO@mjfamily
+  \ifx\CJK@family\CJKKO@mjdefault
     \expandafter\CJKKO@checkhanjaplane#1\fi}
 
 \def\CJKKO@checkhanjaplane#1#2{%

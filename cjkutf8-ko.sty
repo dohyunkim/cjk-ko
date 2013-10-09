@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-ko}[2013/10/07 v1.3 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2013/10/09 v1.3 Hangul typesetting on CJKutf8]
 
 \ifx\eTeXversion\relax \let\eTeXversion\undefined \fi
 \ifx\eTeXversion\undefined
@@ -151,6 +151,25 @@
 \CJKspace
 \CJK@envStart{}{UTF8}{\CJKKO@mjfont}
 \makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% italic correction after cjk
+\edef\maybe@ic@{%
+  \unexpanded{%
+    \let\CJKKO@wasCJK\undefined
+    \ifnum\lastkern=\@ne
+      \unkern\unkern
+      \let\CJKKO@wasCJK\empty
+    \fi
+  }%
+  \unexpanded\expandafter{\maybe@ic@
+    \ifx\CJKKO@wasCJK\empty
+      \CJK@CJK
+      \CJKKO@check@next@tok@
+      \let\CJKKO@wasCJK\undefined
+    \fi
+  }%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CJKscale: scale CJK char size

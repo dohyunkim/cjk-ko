@@ -1,19 +1,22 @@
-2013-10-07      Dohyun Kim <nomos at ktug org>
+2013-10-09      Dohyun Kim <nomos at ktug org>
 
 	Version 1.3
 
-	* cjkutf8-ko.sty: move char definition of U+00B7 to AtBeginDocument;
-	new package options for cjk font setting, mj=<font> and gt=<font>.
+	* cjkutf8-ko.sty:
+		- allow italic correction after CJK char
+		- new package options for cjk font setting, mj=... and gt=...
+		- move char definition of U+00B7 to AtBeginDocument
 
 
 2013-07-03      Dohyun Kim <nomos at ktug org>
 
 	Version 1.2
 
-	* cjkutf8-ko.sty: there was a clash with \makeindex of memoir
-	class as reported by Juho Lee;
-	move caption setting to AtBeginDocument;
-	codes for non-eTeX engines are removed.
+	* cjkutf8-ko.sty:
+		- there was a clash with \makeindex of memoir class as reported
+		by Juho Lee
+		- move caption setting to AtBeginDocument
+		- codes for non-eTeX engines are removed
 
 	* cjk-ko-doc.tex: explicitly state that [usedotemph] option
 	declares \normalem (see the manual of ulem package).

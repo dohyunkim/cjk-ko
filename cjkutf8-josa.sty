@@ -26,10 +26,10 @@
     \def\@setref#1#2#3{\CJKKO@orig@setref{#1}{#2}{#3}%
       \bgroup
       \ifx#1\relax\else
-	\ifx\protect\relax % not from kotexutf
-	  \let\protect\noexpand % not from kotexutf
-	  \xdef\josa@str{\expandafter#2#1}%
-	\fi
+        \ifx\protect\relax % not from kotexutf
+          \let\protect\noexpand % not from kotexutf
+          \xdef\josa@str{\expandafter#2#1}%
+        \fi
       \fi
       \egroup}
     % redefine \@cite@ofmt

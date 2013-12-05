@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-josa}[2013/02/23 v1.0 Auto-Josa for CJKutf8]
+\ProvidesPackage{cjkutf8-josa}[2013/12/06 v1.3 Automatic Josa selection for cjk-ko]
 
 \AtBeginDocument{
   \ifx\use@josa\undefined\else
@@ -57,15 +57,13 @@
 \let\josa@str\empty
 
 %%% user commands: \jong \jung \rieul
-\DeclareRobustCommand*\jong {\chardef\@josa\z@}
-\DeclareRobustCommand*\rieul{\chardef\@josa\@ne}
-\DeclareRobustCommand*\jung {\chardef\@josa\tw@}
+\protected\def\jong {\let\josa@str\empty\chardef\@josa\z@ }
+\protected\def\rieul{\let\josa@str\empty\chardef\@josa\@ne}
+\protected\def\jung {\let\josa@str\empty\chardef\@josa\tw@}
 \jung
 
 \def\makejosa#1#2{%
   \bgroup
-  % \jong etc in \josa@str is now unprotected
-  \def\jong{\chardef\@josa\z@}\def\rieul{\chardef\@josa\@ne}%
   \expandafter\make@josa\josa@str\@nil{#1}{#2}%
   \egroup}
 

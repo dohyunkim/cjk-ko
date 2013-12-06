@@ -54,8 +54,6 @@
   }}{}
 }
 
-\let\josa@str\empty
-
 %%% user commands: \jong \jung \rieul
 \protected\def\jong {\let\josa@str\empty\chardef\@josa\z@ }
 \protected\def\rieul{\let\josa@str\empty\chardef\@josa\@ne}
@@ -84,8 +82,9 @@
     \ifx\@let@token L\rieul\else
     \ifx\@let@token M\jong \else
     \ifx\@let@token N\jong \else
-    \ifx\@let@token\jong \jong\else
-    \ifx\@let@token\rieul\rieul
+    \ifx\@let@token\jong \jong \else
+    \ifx\@let@token\rieul\rieul\else
+      \jung
     \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
     \expandafter\make@josa
   \fi}

@@ -1,24 +1,38 @@
+NAME		= cjk-ko
+TEXFILE		= $(NAME)-doc.tex
+DVIFILE		= $(NAME)-doc.dvi
+PDFFILE		= $(NAME)-doc.pdf
+RUNFILES	= $(wildcard *.sty)
+DOCFILES	= $(TEXFILE) $(PDFFILE) README ChangeLog
+ZIPFILE		= $(NAME).zip
+DO_LATEX	= texfot --quiet --tee=/dev/null latex $(TEXFILE)
+FORMAT		= latex
+RUNDIR		= $(TEXMFDIR)/tex/$(FORMAT)/$(NAME)
+DOCDIR		= $(TEXMFDIR)/doc/$(FORMAT)/$(NAME)
+TEXMFDIR	= $(shell kpsewhich --var-value TEXMFHOME)
+MYTMPFILE	= texfot.XXXXX
 
-NAME = cjk-ko-doc
+all: doc ctan
 
-PDF = $(NAME).pdf
-DVI = $(NAME).dvi
-TEX = $(NAME).tex
-AUX = $(NAME).aux
-LOG = $(NAME).log
+doc: $(PDFFILE)
 
-all: $(PDF)
+$(PDFFILE): $(DVIFILE)
+	dvipdfmx $^
 
-$(PDF): $(DVI)
-	dvipdfmx $(DVI)
+$(DVIFILE): $(TEXFILE) $(RUNFILES)
+	@$(DO_LATEX) | tee $(MYTMPFILE)
+	@if( grep Rerun $(MYTMPFILE) ); then $(DO_LATEX); fi
+	@$(RM) -f $(MYTMPFILE)
 
-$(DVI): $(TEX)
-	latex $(TEX)
-	@if(grep "Rerun" $(LOG) > /dev/null); then latex $(TEX); fi 
+ctan: $(ZIPFILE)
 
-clean:
-	rm -f $(DVI) $(AUX) $(LOG)
+$(ZIPFILE): $(RUNFILES) $(DOCFILES)
+	@mkdir -p $(NAME) && cp $^ $(NAME)
+	@zip -q -r -9 $@ $(NAME) && ls -l $@
+	@$(RM) -rf $(NAME)
 
-dist-clean: clean
-	rm -f $(PDF)
+install: $(RUNFILES) $(DOCFILES)
+	@echo Installing into: $(TEXMFDIR)
+	@mkdir -p $(RUNDIR) && cp $(RUNFILES) $(RUNDIR)
+	@mkdir -p $(DOCDIR) && cp $(DOCFILES) $(DOCDIR)
 

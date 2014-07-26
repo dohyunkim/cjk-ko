@@ -1,7 +1,7 @@
 % kotex.sty
 %
-% (C) Copyright 2007-2013 Koaunghi Un <koaunghi at kornet net>
-%                         Kangsoo Kim <karnes at ktug or kr>
+% (C) Copyright 2007-2014 Koaunghi Un <koaunghi at kornet net>
+%                         Kangsoo Kim <karnes at gmail com>
 %                         Dohyun Kim  <nomos at ktug org>
 %
 % This work may be distributed and/or modified under the
@@ -20,37 +20,54 @@
 %         \usepackage[euc]{kotex}     \usepackage[euc,hangul]{kotex}
 %         \usepackage[cjk]{kotex}     \usepackage[cjk,hangul]{kotex}
 
-\ProvidesPackage{kotex}[2013/03/23 v1.1 Korean TeX (ko.TeX)]
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
+  \ProvidesPackage{kotex}[2014/07/27 v1.2 Korean TeX (ko.TeX)]
+\fi
+
+\ifx\directlua\relax \let\directlua\undefined \fi
+\ifx\XeTeXrevision\relax \let\XeTeXrevision\undefined \fi
+
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname selectfont\endcsname\relax
+  \ifx\directlua\undefined
+    \ifx\XeTeXrevision\undefined
+      \input kotexutf
+    \else
+      \input xetexko.sty
+    \fi
+  \else
+    \input luatexko.sty
+  \fi
+\endinput\fi
+
 
 \newif\if@ko@euc
 \let\@ko@cjk\undefined
 
-\ifx\directlua\relax \let\directlua\undefined \fi
-\ifx\eTeXversion\relax \let\eTeXversion\undefined \fi
-\ifx\eTeXversion\undefined \let\@ko@cjk\empty \fi
 \IfFileExists{kotexutf.sty}{}{\let\@ko@cjk\empty}
 
 \DeclareOption{utf}{}
 \DeclareOption{euc}{\@ko@euctrue}
 \DeclareOption{cjk}{\let\@ko@cjk\empty}
 \DeclareOption*{
-  \ifx가가%
-    \ifx\directlua\undefined
-      \PassOptionsToPackage{\CurrentOption}{xetexko}
-    \else
-      \PassOptionsToPackage{\CurrentOption}{luatexko}
-    \fi
-  \else
-    \if@ko@euc
-      \PassOptionsToPackage{\CurrentOption}{kotex-euc}
-    \else
-      \ifx\@ko@cjk\undefined
-        \PassOptionsToPackage{\CurrentOption}{kotexutf}
+  \ifx\directlua\undefined
+    \ifx\XeTeXrevision\undefined
+      \if@ko@euc
+        \PassOptionsToPackage{\CurrentOption}{kotex-euc}
       \else
-        \PassOptionsToPackage{\CurrentOption}{cjkutf8-ko}
+        \ifx\@ko@cjk\undefined
+          \PassOptionsToPackage{\CurrentOption}{kotexutf}
+        \else
+          \PassOptionsToPackage{\CurrentOption}{cjkutf8-ko}
+        \fi
       \fi
-    \fi
-  \fi}
+    \else
+      \PassOptionsToPackage{\CurrentOption}{xetexko}
+  \else
+    \PassOptionsToPackage{\CurrentOption}{luatexko}
+  \fi
+}
 \InputIfFileExists{kotex.cfg}{}{}
 \ProcessOptions\relax
 
@@ -61,22 +78,22 @@
 \fi
 
 %%% load one of ko.TeX packages
-\ifx가가%
-  \ifx\directlua\undefined
-    \RequirePackage{xetexko}
+\ifx\directlua\undefined
+  \ifx\XeTeXrevision\undefined
+    \if@ko@euc
+      \RequirePackage{kotex-euc}
+    \else
+      \ifx\@ko@cjk\undefined
+        \RequirePackage{kotexutf}
+      \else
+        \RequirePackage{cjkutf8-ko}
+      \fi
+    \fi
   \else
-    \RequirePackage{luatexko}
+    \RequirePackage{xetexko}
   \fi
 \else
-  \if@ko@euc
-    \RequirePackage{kotex-euc}
-  \else
-    \ifx\@ko@cjk\undefined
-      \RequirePackage{kotexutf}
-    \else
-      \RequirePackage{cjkutf8-ko}
-    \fi
-  \fi
+  \RequirePackage{luatexko}
 \fi
 
 \endinput

@@ -6,7 +6,7 @@
 \usepackage{geometry}
 \usepackage[cjk,hangul,usedotemph]{kotex}
 \usepackage{xcolor}
-\usepackage{url}
+\usepackage[pdfencoding=auto]{hyperref}
 
 \def\cs#1{\texttt{\color{teal}\char92 \chardef\{=123 \chardef\}=125 #1}}
 \def\koTeX{\textsf{k}\kern-.1em\textit{o}.\kern-.1667em\TeX}
@@ -33,7 +33,9 @@
   수 있다.
 \end{abstract}
 
-\section{Introduction}
+\tableofcontents
+
+\section{소개}
   \begin{itemize}
     \item CJK 패키지의 \texttt{UTF8} 환경 이용
     \item 복잡한 환경 지시 없이 \texttt{kotex}만 부르면 바로 한글 가능
@@ -142,13 +144,26 @@
   \item[\cs{hanjanum}] 一 二 三 四 五 六 七 八 九 十 十一 十二 $\cdots$ 二十四
 \end{itemize}
 
+\section{\texttt{kotex.sty}에 대하여}
+다양한 \koTeX\ 패키지로의 준자동적인 연결을 담담하는 스타일 파일이다.
+\begin{itemize}
+  \item \verb|[cjk]| 옵션을 주면 \cjkko\ 패키지를 로드한다.
+  \item \verb|[euc]| 옵션을 주면 \verb|kotex-euc| 패키지를 로드한다.
+    이 패키지는 텍라이브에 들어있지 않으므로 KTUG 사설 저장소로부터
+    설치해야 한다.
+  \item 위 두 가지 옵션이 모두 지시되지 않았다면 현재 동작 중인 텍 엔진을
+    감지해서 \verb|kotexutf.sty|, \verb|xetexko.sty|, 혹은 \verb|luatexko.sty|
+    가운데 하나를 로드한다.  플레인텍에서도 마찬가지로 동작한다.
+  \item 어느 경우이든 사용자가 지시한 여타 패키지 옵션들은 새로 불려지는
+    패키지에 모두 투명하게 전달된다.
+\end{itemize}
+
 \section{License}
 \begin{itemize}
   \item GPL~--- \verb|cjkutf8-*| 파일의 라이선스는 CJK 패키지와
     같을 수밖에 없다.
   \item LPPL~--- \verb|ko*| 파일들은 \koTeX\ 패키지에서 유래한다.
-  \hfill \fboxsep=-\fboxrule
-  \fbox{\vbox to1em{\hbox to1em{\hss}\vss}}
 \end{itemize}
+\nobreak\hfill \fboxsep=-\fboxrule \fbox{\vbox to1em{\hbox to1em{\hss}\vss}}
 
 \end{document}

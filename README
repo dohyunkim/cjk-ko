@@ -1,14 +1,13 @@
 CJK-ko package version 1.4 (2014/07/27)
 =======================================
 
-This package supports typesetting modern Korean documents with the help
-of LaTeX2e CJK package written by Werner Lemberg. Though this package
-supports, unlike CJK package, only UTF-8 input encoding, it provides
-some enhanced features focused on Korean typesetting culture, for
-instance: allow linebreak between Latin and CJK characters; scale and/or
-lower CJK characters, and automatic Josa selection.
+This package supports typesetting of modern Korean documents with the help
+of LaTeX2e CJK package written by Werner Lemberg. Unlike CJK package,
+only UTF-8 input encoding is supported. This package however provides
+some enhanced features focused on Korean typesetting culture, one of them
+being allowing line-break between Latin and CJK characters.
 
-Currently this package requires nanumtype1 package as well.
+Currently this package requires nanumtype1 package.
 
 
 Author

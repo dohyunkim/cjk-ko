@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-ko}[2013/11/28 v1.3 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2015/03/12 v1.5 Hangul typesetting on CJKutf8]
 
 \ifx\eTeXversion\relax \let\eTeXversion\undefined \fi
 \ifx\eTeXversion\undefined
@@ -90,7 +90,7 @@
     \CJKfamily{\CJKKO@mjfont}
     \g@addto@macro\normalfont{\CJKfamily{\CJKKO@mjfont}}
     \if@hangul\ifx\usecjk@@font\undefined
-      \IfFileExists{t1\CJKKO@mjfont m}{%
+      \IfFileExists{t1\CJKKO@mjfont .fd}{%
         \CJKKO@hangulspaceglue{t1\CJKKO@mjfont m}% space glue from hangul font
       }{}
     \fi\fi
@@ -98,7 +98,7 @@
     \CJKfamily{\CJKKO@gtfont}
     \g@addto@macro\normalfont{\CJKfamily{\CJKKO@gtfont}}
     \if@hangul\ifx\usecjk@@font\undefined
-      \IfFileExists{t1\CJKKO@gtfont m}{%
+      \IfFileExists{t1\CJKKO@gtfont .fd}{%
         \CJKKO@hangulspaceglue{t1\CJKKO@gtfont m}% space glue from hangul font
       }{}
     \fi\fi
@@ -106,7 +106,7 @@
   \let\reset@font\normalfont
 }
 
-\def\CJKKO@hangulspaceglue#1{%
+\def\CJKKO@hangulspaceglue#1{\@ifclassloaded{minimal}{}{%
   \bgroup
   \@for\reserved@a:=,\small,\footnotesize,\large,\Large,\LARGE\do{%
     \reserved@a
@@ -115,7 +115,7 @@
     \fontdimen3\font=.5\fontdimen2\x
     \fontdimen4\font=.3333\fontdimen2\x
     \fontdimen7\font=\fontdimen7\x }%
-  \egroup }
+  \egroup }}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%% dotemph
@@ -212,14 +212,15 @@
         \csname \curr@fontshape\endcsname}
     \if@hangul % hangul is main language
       % scale space glue
-      \bgroup
-      \@for\reserved@a:=,\small,\footnotesize,\large,\Large,\LARGE\do{%
-        \reserved@a
-        \fontdimen2\font=\CJK@scale\fontdimen2\font
-        \fontdimen3\font=\CJK@scale\fontdimen3\font
-        \fontdimen4\font=\CJK@scale\fontdimen4\font
-        \fontdimen7\font=\CJK@scale\fontdimen7\font}
-      \egroup
+      \@ifpackageloaded{minimal}{}{%
+        \bgroup
+        \@for\reserved@a:=,\small,\footnotesize,\large,\Large,\LARGE\do{%
+          \fontdimen2\font=\CJK@scale\fontdimen2\font
+          \fontdimen3\font=\CJK@scale\fontdimen3\font
+          \fontdimen4\font=\CJK@scale\fontdimen4\font
+          \fontdimen7\font=\CJK@scale\fontdimen7\font}
+        \egroup
+      }
       % scale parindent, footnotesep, footins
       \parindent\CJK@scale\parindent
       \footnotesep\CJK@scale\footnotesep

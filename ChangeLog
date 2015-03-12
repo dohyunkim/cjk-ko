@@ -1,3 +1,9 @@
+xxxx-xx-xx      Dohyun Kim <nomos at ktug org>
+
+	Version 1.5
+
+	* cjkutf8-ko.sty: fix a bug wrt inter-word glue between hangul.
+
 2014-07-27      Dohyun Kim <nomos at ktug org>
 
 	Version 1.4

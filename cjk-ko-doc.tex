@@ -5,7 +5,7 @@
 \documentclass[dvipdfmx,b5paper]{article}
 \usepackage{geometry}
 \usepackage[cjk,hangul,usedotemph]{kotex}
-\usepackage{xcolor}
+\usepackage{xcolor,hologo}
 \usepackage[pdfencoding=auto]{hyperref}
 
 \def\cs#1{\texttt{\color{teal}\char92 \chardef\{=123 \chardef\}=125 #1}}
@@ -17,7 +17,7 @@
 \title{\cjkko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize $<$\texttt{nomos at ktug org}$>$ \and
   \normalsize $<$\url{http://github.com/dohyunkim/cjk-ko}$>$}
-\date{Version 1.4\quad 2014/07/27}
+\date{Version 1.5\quad 2015/03/20}
 \begin{document}
 \maketitle
 
@@ -148,6 +148,8 @@
 다양한 \koTeX\ 패키지로의 준자동적인 연결을 담담하는 스타일 파일이다.
 \begin{itemize}
   \item \verb|[cjk]| 옵션을 주면 \cjkko\ 패키지를 로드한다.
+    다만 \hologo{XeTeX} 혹은 \hologo{LuaTeX} 엔진이 가동되고 있다면
+    이 옵션은 무시된다.
   \item \verb|[euc]| 옵션을 주면 \verb|kotex-euc| 패키지를 로드한다.
     이 패키지는 텍라이브에 들어있지 않으므로 KTUG 사설 저장소로부터
     설치해야 한다.

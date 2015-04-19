@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-ko}[2015/03/20 v1.5 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2015/04/19 v1.6 Hangul typesetting on CJKutf8]
 
 \ifx\eTeXversion\relax \let\eTeXversion\undefined \fi
 \ifx\eTeXversion\undefined
@@ -419,6 +419,22 @@
 %%% cause:  memoir appempts to write index entries to a file
 %%% at the end of document without protecting active characters.
 %%% spotted by Juho Lee. thanks to him.
-\AtEndDocument{\CJK@makeInactive}
+%\AtEndDocument{\CJK@makeInactive}
+%%% still conflicts with package verbments.
+%%% so now we make utf8 characters robust.
+\count@"80 \loop
+  \uccode\count@\z@
+  \lccode\count@\z@
+  \catcode\count@=12
+\ifnum\count@<"BF \advance\count@\@ne \repeat
+
+\count@"C2 \loop
+  \uccode\count@\z@
+  \lccode\count@\z@
+  \begingroup
+  \lccode`\~\count@
+  \lowercase{\endgroup
+  \protected\edef~{\unexpanded\expandafter{~}}}
+\ifnum\count@<"F4 \advance\count@\@ne \repeat
 
 \endinput

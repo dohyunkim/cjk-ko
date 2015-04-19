@@ -17,7 +17,7 @@
 \title{\cjkko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize $<$\texttt{nomos at ktug org}$>$ \and
   \normalsize $<$\url{http://github.com/dohyunkim/cjk-ko}$>$}
-\date{Version 1.5\quad 2015/03/20}
+\date{Version 1.6\quad 2015/04/19}
 \begin{document}
 \maketitle
 
@@ -150,9 +150,11 @@
   \item \verb|[cjk]| 옵션을 주면 \cjkko\ 패키지를 로드한다.
     다만 \hologo{XeTeX} 혹은 \hologo{LuaTeX} 엔진이 가동되고 있다면
     이 옵션은 무시된다.
-  \item \verb|[euc]| 옵션을 주면 \verb|kotex-euc| 패키지를 로드한다.
-    이 패키지는 텍라이브에 들어있지 않으므로 KTUG 사설 저장소로부터
-    설치해야 한다.
+  \item \verb|[euc]| 옵션을 주면 \verb|kotex-euc| 패키지를 로드한다.(이
+    패키지는 텍라이브에 들어있지 않으므로 KTUG 사설 저장소로부터
+    설치해야 한다) \hologo{XeTeX} 엔진 하에서는 이 옵션은 무시된다.
+    그러나 \hologo{LuaTeX} 엔진이 가동되고 있다면
+    \verb|\luatexuhcinputencoding=1| 명령이 자동으로 실행된다.
   \item 위 두 가지 옵션이 모두 지시되지 않았다면 현재 동작 중인 텍 엔진을
     감지해서 \verb|kotexutf.sty|, \verb|xetexko.sty|, 혹은 \verb|luatexko.sty|
     가운데 하나를 로드한다.  플레인텍에서도 마찬가지로 동작한다.

@@ -22,7 +22,7 @@
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
-  \ProvidesPackage{kotex}[2015/03/20 v1.5 Korean TeX (ko.TeX)]
+  \ProvidesPackage{kotex}[2015/04/19 v1.6 Korean TeX (ko.TeX)]
 \fi
 
 \ifx\directlua\relax \let\directlua\undefined \fi
@@ -95,6 +95,9 @@
   \fi
 \else
   \RequirePackage{luatexko}
+  \if@ko@euc
+    \luatexuhcinputencoding=1
+  \fi
 \fi
 
 \endinput

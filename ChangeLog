@@ -1,3 +1,10 @@
+2015-04-19      Dohyun Kim <nomos at ktug org>
+
+	Version 1.6
+
+	* kotex.sty: [euc] option triggers relevant luatexko commands
+	* cjkutf8-ko.sty: make utf-8 characters robust.
+
 2015-03-20      Dohyun Kim <nomos at ktug org>
 
 	Version 1.5

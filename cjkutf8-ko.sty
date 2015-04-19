@@ -422,12 +422,6 @@
 %\AtEndDocument{\CJK@makeInactive}
 %%% still conflicts with package verbments.
 %%% so now we make utf8 characters robust.
-\count@"80 \loop
-  \uccode\count@\z@
-  \lccode\count@\z@
-  \catcode\count@=12
-\ifnum\count@<"BF \advance\count@\@ne \repeat
-
 \count@"C2 \loop
   \uccode\count@\z@
   \lccode\count@\z@

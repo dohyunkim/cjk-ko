@@ -13,7 +13,12 @@
 % version 2006/05/20 or later.
 %
 
-\ProvidesPackage{konames-utf}[2015/02/20 v1.5 UTF-8 Hangul captions]
+\ProvidesPackage{konames-utf}[2015/07/06 v1.7 UTF-8 Hangul captions]
+
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname if@hanja\endcsname\relax
+  \newif\if@hanja
+\fi
 
 \if@hanja
   \def\today{\number\year 年 \number\month 月 \number\day 日}

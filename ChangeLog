@@ -1,3 +1,9 @@
+20XX-XX-XX      Dohyun Kim <nomos at ktug org>
+
+	Version 1.7
+
+	* konames-utf.sty: add \newif\if@hanja if undefined
+
 2015-04-19      Dohyun Kim <nomos at ktug org>
 
 	Version 1.6

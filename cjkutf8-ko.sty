@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-ko}[2015/04/19 v1.6 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2015/07/14 v1.7 Hangul typesetting on CJKutf8]
 
 \ifx\eTeXversion\relax \let\eTeXversion\undefined \fi
 \ifx\eTeXversion\undefined
@@ -430,5 +430,19 @@
   \lowercase{\endgroup
   \protected\edef~{\unexpanded\expandafter{~}}}
 \ifnum\count@<"F4 \advance\count@\@ne \repeat
+% now we have to care about hyperref bookmarks.
+\AtBeginDocument{
+  \@ifpackageloaded{hyperref}{\g@addto@macro\pdfstringdefPreHook{%
+      \count@"C2 \loop
+      \uccode\count@\z@
+      \lccode\count@\z@
+      \begingroup
+      \lccode`\~\count@
+      \lowercase{\endgroup
+      \edef~{\unexpanded\expandafter{~}}}%
+      \ifnum\count@<"F4 \advance\count@\@ne \repeat
+  }}{}
+}
+
 
 \endinput

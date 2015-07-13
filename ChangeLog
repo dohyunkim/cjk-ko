@@ -2,6 +2,7 @@
 
 	Version 1.7
 
+	* cjkutf8-ko.sty: hyperref bookmarks were broken
 	* konames-utf.sty: add \newif\if@hanja if undefined
 
 2015-04-19      Dohyun Kim <nomos at ktug org>

@@ -17,7 +17,7 @@
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname if@hanja\endcsname\relax
-  \newif\if@hanja
+  \expandafter\newif\csname if@hanja\endcsname
 \fi
 
 \if@hanja

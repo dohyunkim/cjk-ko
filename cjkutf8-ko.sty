@@ -431,16 +431,17 @@
   \protected\edef~{\unexpanded\expandafter{~}}}
 \ifnum\count@<"F4 \advance\count@\@ne \repeat
 % now we have to care about hyperref bookmarks.
-\AtBeginDocument{
-  \@ifpackageloaded{hyperref}{\g@addto@macro\pdfstringdefPreHook{%
-      \count@"C2 \loop
-      \begingroup
-      \lccode`\~\count@
-      \lowercase{\endgroup
-      \edef~{\unexpanded\expandafter{~}}}%
-      \ifnum\count@<"F4 \advance\count@\@ne \repeat
-  }}{}
-}
-
+\ifcsname pdfstringdefPreHook\endcsname\else
+  \let\pdfstringdefPreHook\empty
+\fi
+\edef\pdfstringdefPreHook{%
+  \unexpanded\expandafter{\pdfstringdefPreHook
+    \count@"C2 \loop
+    \begingroup
+    \lccode`\~\count@
+    \lowercase{\endgroup
+    \edef~{\unexpanded\expandafter{~}}}%
+    \ifnum\count@<"F4 \advance\count@\@ne \repeat
+}}
 
 \endinput

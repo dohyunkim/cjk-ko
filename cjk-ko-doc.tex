@@ -2,11 +2,19 @@
 %%
 %% This file is in public domain
 
+\ifcase\pdfoutput
 \documentclass[dvipdfmx,b5paper]{article}
+\else
+\documentclass[b5paper]{article}
+\fi
 \usepackage{geometry}
 \usepackage[cjk,hangul,usedotemph]{kotex}
 \usepackage{xcolor,hologo}
-\usepackage[pdfencoding=auto]{hyperref}
+\usepackage[pdfencoding=auto,
+  pdftitle={cjk-ko 간단 매뉴얼},
+  pdfauthor={Dohyun Kim},
+  pdfkeywords={CJK, LaTeX, Korean, ko.TeX}
+]{hyperref}
 
 \def\cs#1{\texttt{\color{teal}\char92 \chardef\{=123 \chardef\}=125 #1}}
 \def\koTeX{\textsf{k}\kern-.1em\textit{o}.\kern-.1667em\TeX}
@@ -17,7 +25,7 @@
 \title{\cjkko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize $<$\texttt{nomos at ktug org}$>$ \and
   \normalsize $<$\url{http://github.com/dohyunkim/cjk-ko}$>$}
-\date{Version 1.6\quad 2015/04/19}
+\date{Version 1.7\quad 20XX/XX/XX}
 \begin{document}
 \maketitle
 

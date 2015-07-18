@@ -65,8 +65,12 @@
 \def\CJKKO@removetrailingEQ#1={#1}
 \ProcessOptions\relax
 
-\ifx\CJKKO@mjfont\undefined \def\CJKKO@mjfont{nanummj}\fi
-\ifx\CJKKO@gtfont\undefined \def\CJKKO@gtfont{nanumgt}\fi
+\ifx\CJKKO@mjfont\undefined
+  \IfFileExists{c70nanummj.fd}{\def\CJKKO@mjfont{nanummj}}{\def\CJKKO@mjfont{mj}}
+\fi
+\ifx\CJKKO@gtfont\undefined
+  \IfFileExists{c70nanumgt.fd}{\def\CJKKO@gtfont{nanumgt}}{\def\CJKKO@gtfont{mj}}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % font settings
@@ -410,7 +414,7 @@
   \let\CJK@addcmap\@gobble
   \ifx\pdfgentounicode\undefined\else
     \pdfgentounicode=1
-    \InputIfFileExists{glyphtounicode}{}{}
+    \InputIfFileExists{glyphtounicode.tex}{}{}
   \fi
 \fi
 

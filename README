@@ -1,4 +1,4 @@
-CJK-ko package version 1.7 (20XX/XX/XX)
+CJK-ko package version 1.7 (2015/07/18)
 =======================================
 
 This package supports typesetting of modern Korean documents with the help
@@ -91,15 +91,15 @@ Disable automatic Josa selection
 
     [usedotemph]
 Enable \dotemph command. CJKfntef.sty and CJKulem.sty will be loaded
-as well.
+automatically.
 
     [usecjkt1font]
-Latin characters are typeset by CJK font. Only Nanum T1 font is
+CJK fonts will be used for Latin characters as well. Only Nanum T1 font is
 currently available.
 
     [mj=<font>], [gt=<font>]
-Declare Myeongjo and Gothic fonts respectively. `c70<font>.fd` should
-be existant.
+Declare Myeongjo (serif) and Gothic (sans-serif) font families respectively.
+`c70<font>.fd` should be existant.
 
 User commands
 -------------

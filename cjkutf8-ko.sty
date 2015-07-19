@@ -19,12 +19,12 @@
 
 \ProvidesPackage{cjkutf8-ko}[2015/07/18 v1.7 Hangul typesetting on CJKutf8]
 
-\ifx\eTeXversion\relax \let\eTeXversion\undefined \fi
-\ifx\eTeXversion\undefined
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname eTeXversion\endcsname\relax
   \PackageError{cjkutf8-ko}
     {e-TeX engine is required}
     {Please update your TeX system to the latest distribution}
-\fi
+\endinput\fi
 
 \newif\if@hangul
 \newif\if@hanja
@@ -66,7 +66,13 @@
 \ProcessOptions\relax
 
 \ifx\CJKKO@mjfont\undefined
-  \IfFileExists{c70nanummj.fd}{\def\CJKKO@mjfont{nanummj}}{\def\CJKKO@mjfont{mj}}
+  \IfFileExists{c70nanummj.fd}{\def\CJKKO@mjfont{nanummj}}{
+    \def\CJKKO@mjfont{mj}
+    \ifx\usedot@mph\undefined\else
+      \def\dotemphraise{1ex}
+      \def\dotemphchar{\Unicode{"02}{"D9}}
+    \fi
+  }
 \fi
 \ifx\CJKKO@gtfont\undefined
   \IfFileExists{c70nanumgt.fd}{\def\CJKKO@gtfont{nanumgt}}{\def\CJKKO@gtfont{mj}}
@@ -134,16 +140,11 @@
   \addto@hook\UL@hook{\let\CJKglue\HangulGlue}
   \RequirePackage{CJKfntef}
   \normalem % users should declare \ULforem to enable underlining for \emph
-  \def\dotemphraise{0.2em}
-  \def\dotemphchar{\bfseries\Unicode{"02}{"D9}}
+  \ifx\dotemphraise\undefined \def\dotemphraise{0.5ex}\fi
+  \ifx\dotemphchar\undefined \def\dotemphchar{\bfseries\Unicode{"02}{"D9}}\fi
   % user command: dotemph
   \DeclareRobustCommand*\dotemph{%
     \CJKunderanysymbol{-\dotemphraise}{\dotemphchar}}
-  \AtBeginDocument{
-    \@ifpackageloaded{hyperref}{\g@addto@macro\pdfstringdefPreHook{%
-        \let\dotemph\@firstofone
-    }}{}
-  }
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -216,7 +217,7 @@
         \csname \curr@fontshape\endcsname}
     \if@hangul % hangul is main language
       % scale space glue
-      \@ifpackageloaded{minimal}{}{%
+      \@ifclassloaded{minimal}{}{%
         \bgroup
         \@for\reserved@a:=,\small,\footnotesize,\large,\Large,\LARGE\do{%
           \fontdimen2\font=\CJK@scale\fontdimen2\font
@@ -408,13 +409,13 @@
 %\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
-%%% disable cmap by CJK, which sometimes behaves insalely
+%%% disable cmap by CJK.
 %%% instead try to use pdftex's pdfgentounicode
 \ifpdf
   \let\CJK@addcmap\@gobble
   \ifx\pdfgentounicode\undefined\else
-    \pdfgentounicode=1
-    \InputIfFileExists{glyphtounicode.tex}{}{}
+    \pdfgentounicode\@ne
+    \InputIfFileExists{glyphtounicode}{}{}
   \fi
 \fi
 
@@ -434,18 +435,19 @@
   \lowercase{\endgroup
   \protected\edef~{\unexpanded\expandafter{~}}}
 \ifnum\count@<"F4 \advance\count@\@ne \repeat
-% now we have to care about hyperref bookmarks.
-\ifcsname pdfstringdefPreHook\endcsname\else
+% then we have to care about hyperref bookmarks.
+\ifx\pdfstringdefPreHook\undefined
   \let\pdfstringdefPreHook\empty
 \fi
-\edef\pdfstringdefPreHook{%
-  \unexpanded\expandafter{\pdfstringdefPreHook
-    \count@"C2 \loop
-    \begingroup
-    \lccode`\~\count@
-    \lowercase{\endgroup
-    \edef~{\unexpanded\expandafter{~}}}%
-    \ifnum\count@<"F4 \advance\count@\@ne \repeat
-}}
+\g@addto@macro\pdfstringdefPreHook{%
+  \count@"C2 \loop
+  \begingroup
+  \lccode`\~\count@
+  \lowercase{\endgroup
+  \edef~{\unexpanded\expandafter{~}}}%
+  \ifnum\count@<"F4 \advance\count@\@ne \repeat
+  % and dotemph as well
+  \let\dotemph\@firstofone
+}
 
 \endinput

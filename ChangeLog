@@ -1,8 +1,8 @@
-20XX-XX-XX      Dohyun Kim <nomos at ktug org>
+2015-07-18      Dohyun Kim <nomos at ktug org>
 
 	Version 1.7
 
-	* cjkutf8-ko.sty: use `mj' when `nanum' is missing
+	* cjkutf8-ko.sty: use `mj' when nanumtype1 is missing
 	* cjkutf8-ko.sty: no error even when glyphtounicode is missing
 	* cjkutf8-ko.sty: hyperref bookmarks were broken
 	* konames-utf.sty: add \newif\if@hanja if undefined

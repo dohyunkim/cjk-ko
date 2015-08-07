@@ -1,4 +1,4 @@
-CJK-ko package version 1.7 (2015/07/18)
+CJK-ko package version 1.8 (2015/xx/xx)
 =======================================
 
 This package supports typesetting of modern Korean documents with the help
@@ -100,6 +100,11 @@ currently available.
     [mj=<font>], [gt=<font>]
 Declare Myeongjo (serif) and Gothic (sans-serif) font families respectively.
 `c70<font>.fd` should be existant.
+
+    [truetype]
+When TrueType fonts are declared by mj or gt option, it is recommended to
+declare this option as well, which enables text extraction from resulting PDF.
+
 
 User commands
 -------------

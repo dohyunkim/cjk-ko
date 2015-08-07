@@ -35,6 +35,7 @@
 \DeclareOption{usecjkt1font}{\let\usecjk@@font\empty\@hangultrue}
 \DeclareOption{usedotemph}{\let\usedot@mph\empty}
 \DeclareOption{nojosa}{\let\use@josa\undefined}
+\DeclareOption{truetype}{\let\use@cjk@cmap@\relax}
 \DeclareOption*{\expandafter\CJKKO@userfont@option\CurrentOption=\end}
 \def\CJKKO@userfont@option#1=#2\end{%
   \ifx\empty#2\empty
@@ -412,7 +413,12 @@
 %%% use pdftex's pdfgentounicode
 \ifpdf
   \ifx\pdfgentounicode\undefined\else
-    \InputIfFileExists{glyphtounicode}{\pdfgentounicode\@ne}{}
+    \ifx\use@cjk@cmap@\relax\else
+      \InputIfFileExists{glyphtounicode}{%
+        \let\CJK@addcmap\@gobble
+        \pdfgentounicode\@ne
+      }{}
+    \fi
   \fi
 \fi
 

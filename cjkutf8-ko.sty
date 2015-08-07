@@ -409,13 +409,10 @@
 %\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
-%%% disable cmap by CJK.
-%%% instead try to use pdftex's pdfgentounicode
+%%% use pdftex's pdfgentounicode
 \ifpdf
-  \let\CJK@addcmap\@gobble
   \ifx\pdfgentounicode\undefined\else
-    \pdfgentounicode\@ne
-    \InputIfFileExists{glyphtounicode}{}{}
+    \InputIfFileExists{glyphtounicode}{\pdfgentounicode\@ne}{}
   \fi
 \fi
 

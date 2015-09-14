@@ -24,9 +24,9 @@
   \def\today{\number\year 年 \number\month 月 \number\day 日}
   \def\enclname{同封物}
   \def\ccname{寫本}% 사전에서
-  \def\headtoname{受信人}%
-  \def\seename{\을~參考}%
-  \def\alsoname{\을~參考}%
+  \def\headtoname{受信人:}%
+  %\def\seename{\을~參考}%
+  %\def\alsoname{\을~參考}%
   \def\contentsname{目~次}%
   \def\listfigurename{그림~目次}%
   \def\listtablename{表~目次}%
@@ -42,13 +42,14 @@
   \def\sectionname{節}
   \def\colorlayer{幻燈版~色相}% 사전에서
   \def\glossaryname{語~彙}% 사전에서
+  \def\proofname{證明}%
 \else
   \def\today{\number\year 년 \number\month 월 \number\day 일}
   \def\enclname{동봉물}
   \def\ccname{사본}%
-  \def\headtoname{받는이}%
-  \def\seename{\을~참고}%
-  \def\alsoname{\을~함께~참고}%
+  \def\headtoname{받는이:}%
+  %\def\seename{\을~참고}%
+  %\def\alsoname{\을~함께~참고}%
   \def\contentsname{차~례}%
   \def\listfigurename{그림~차례}%
   \def\listtablename{표~차례}%
@@ -64,9 +65,12 @@
   \def\sectionname{절}% 단락 - subsection 소단락
   \def\colorlayer{환등판~색깔}% 사전에서
   \def\glossaryname{용어집}% 사전에서
+  \def\proofname{증명}%
 \fi
 \def\pagename{페이지}% 쪽
 \def\figurename{그림}
+\def\seename{$rightarrow$}
+\def\alsoname{$Rightarrow$}
 
 \@ifclassloaded{book}{%
   \def\@chapapp#1#2{\KSTHE#1#2#1\chaptername}

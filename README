@@ -105,6 +105,8 @@ Declare Myeongjo (serif) and Gothic (sans-serif) font families respectively.
 When TrueType fonts are declared by mj or gt option, it is recommended to
 declare this option as well, which enables text extraction from resulting PDF.
 
+Other unknown options will be passed to CJKutf8.sty.
+
 
 User commands
 -------------

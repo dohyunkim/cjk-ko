@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-ko}[2015/07/18 v1.7 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2015/10/14 v1.8 Hangul typesetting on CJKutf8]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname eTeXversion\endcsname\relax
@@ -39,7 +39,7 @@
 \DeclareOption*{\expandafter\CJKKO@userfont@option\CurrentOption=\end}
 \def\CJKKO@userfont@option#1=#2\end{%
   \ifx\empty#2\empty
-    \PackageError{cjkutf8-ko}{Option not used: #1}{}
+    \PassOptionsToPackage{#1}{CJKutf8}
   \else
     \def\reserved@a{mj}\def\reserved@b{gt}\def\reserved@c{#1}
     \ifx\reserved@a\reserved@c
@@ -82,7 +82,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % font settings
 \ifx\usecjk@@font\undefined\else
-  \RequirePackage[T1]{fontenc}
+  \PassOptionsToPackage{T1}{CJKutf8}
   \RequirePackage{textcomp}
   \IfFileExists{t1\CJKKO@mjfont.fd}{\let\rmdefault\CJKKO@mjfont}{}
   \IfFileExists{t1\CJKKO@gtfont.fd}{\let\sfdefault\CJKKO@gtfont}{}
@@ -431,8 +431,8 @@
 %%% still conflicts with package verbments.
 %%% so now we make utf8 characters robust.
 \count@"C2 \loop
-  \uccode\count@\z@
-  \lccode\count@\z@
+  \uccode\count@\count@
+  \lccode\count@\count@
   \begingroup
   \lccode`\~\count@
   \lowercase{\endgroup
@@ -452,5 +452,10 @@
   % and dotemph as well
   \let\dotemph\@firstofone
 }
+% protect against lowercase
+\count@"80 \loop
+  \uccode\count@\count@
+  \lccode\count@\count@
+\ifnum\count@<"BF \advance\count@\@ne \repeat
 
 \endinput

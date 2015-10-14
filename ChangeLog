@@ -3,6 +3,7 @@
 	Version 1.8
 
 	* cjkutf8-ko.sty: package option [truetype] activates `\CJK@addcmap'
+	* cjkutf8-ko.sty: pass unknown options to CJKutf8.sty
 
 2015-07-18      Dohyun Kim <nomos at ktug org>
 

@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-ko}[2015/10/14 v1.8 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2015/10/27 v1.8 Hangul typesetting on CJKutf8]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname eTeXversion\endcsname\relax
@@ -457,5 +457,10 @@
   \uccode\count@\count@
   \lccode\count@\count@
 \ifnum\count@<"BF \advance\count@\@ne \repeat
+
+%%% ignore variation selectors for korean hanja
+\DeclareUnicodeCharacter{FE00}{}
+\DeclareUnicodeCharacter{FE01}{}
+\DeclareUnicodeCharacter{FE02}{}
 
 \endinput

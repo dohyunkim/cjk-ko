@@ -17,7 +17,8 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-ko}[2016/04/04 v1.8 Hangul typesetting on CJKutf8]
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesPackage{cjkutf8-ko}[2021/01/12 v1.9 Hangul typesetting on CJKutf8]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname eTeXversion\endcsname\relax
@@ -90,16 +91,16 @@
 
 \RequirePackage{CJKutf8}
 
-\g@addto@macro\rmfamily{\CJKfamily{\CJKKO@mjfont}}
-\g@addto@macro\sffamily{\CJKfamily{\CJKKO@gtfont}}
-\g@addto@macro\ttfamily{\CJKfamily{\CJKKO@gtfont}}
+\AddToHook{rmfamily}{\CJKfamily{\CJKKO@mjfont}}
+\AddToHook{sffamily}{\CJKfamily{\CJKKO@gtfont}}
+\AddToHook{ttfamily}{\CJKfamily{\CJKKO@gtfont}}
 
 \AtBeginDocument{
   \edef\reserved@a{\familydefault}
   \edef\reserved@b{\rmdefault}
   \ifx\reserved@a\reserved@b
     \CJKfamily{\CJKKO@mjfont}
-    \g@addto@macro\normalfont{\CJKfamily{\CJKKO@mjfont}}
+    \AddToHook{normalfont}{\CJKfamily{\CJKKO@mjfont}}
     \if@hangul\ifx\usecjk@@font\undefined
       \IfFileExists{t1\CJKKO@mjfont .fd}{%
         \CJKKO@hangulspaceglue{t1\CJKKO@mjfont m}% space glue from hangul font
@@ -107,14 +108,13 @@
     \fi\fi
   \else
     \CJKfamily{\CJKKO@gtfont}
-    \g@addto@macro\normalfont{\CJKfamily{\CJKKO@gtfont}}
+    \AddToHook{normalfont}{\CJKfamily{\CJKKO@gtfont}}
     \if@hangul\ifx\usecjk@@font\undefined
       \IfFileExists{t1\CJKKO@gtfont .fd}{%
         \CJKKO@hangulspaceglue{t1\CJKKO@gtfont m}% space glue from hangul font
       }{}
     \fi\fi
   \fi
-  \let\reset@font\normalfont
 }
 
 \def\CJKKO@hangulspaceglue#1{\@ifclassloaded{minimal}{}{%

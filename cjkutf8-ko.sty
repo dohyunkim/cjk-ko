@@ -194,28 +194,12 @@
   \ifx\usecjk@@font\undefined
   \ifx\CJK@scale\undefined\else
     % redefine \CJK@empty
+    \let\CJKKO@@empty\CJK@empty
     \def\CJK@empty#1{%
-      \@tempdimb \f@size\p@
-      \@tempdimb\CJK@scale\@tempdimb %%% inserted
-      \ifx\optional@arg \@empty
-      \else
-        \expandafter\ifx
-         \csname CJK@\mandatory@arg/\f@size/\the\@tempdimb\endcsname \relax
-          \@tempdimb \optional@arg\@tempdimb
-          #1{Font\space shape\space `\curr@fontshape'\space
-             will\space be\MessageBreak
-             scaled\space to\space size\space \the\@tempdimb}%
-          \expandafter
-          \gdef\csname CJK@\mandatory@arg/\f@size/\the\@tempdimb\endcsname{}%
-        \fi
-      \fi
-      \edef\external@font{%
-        \mandatory@arg\CJK@plane\space at \the\@tempdimb}%
-      \xdef\font@name{%
-        \csname \curr@fontshape/\f@size/\CJK@plane\endcsname}%
-      \expandafter\global\expandafter\let
-       \csname \CJK@curr@fontshape\expandafter\endcsname
-        \csname \curr@fontshape\endcsname}
+      \afterassignment\CJKKO@@empty@insert
+      \CJKKO@@empty{#1}}
+    \def\CJKKO@@empty@insert{\@tempdimb\CJK@scale\@tempdimb}
+    % end of redefinition
     \if@hangul % hangul is main language
       % scale space glue
       \@ifclassloaded{minimal}{}{%
@@ -370,14 +354,11 @@
 \AtBeginDocument{
   \ifx\usecjk@@font\undefined
   \ifx\CJK@charlower\undefined\else
+    \let\CJKKO@@symbol\CJKsymbol
     \DeclareRobustCommand{\CJKsymbol}[1]{%
-      \leavevmode\lower\CJK@charlower\hbox{% inserted
-        \symbol{#1}%
-        \ifCJK@bold@
-          \hbox to \CJKboldshift{\hss\symbol{#1}}%
-          \hbox to \CJKboldshift{\hss\symbol{#1}}%
-        \fi
-      }% inserted
+      \leavevmode\lower\CJK@charlower\hbox\bgroup
+        \CJKKO@@symbol{#1}%
+      \egroup
     }
   \fi\fi
 }

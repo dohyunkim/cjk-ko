@@ -24,16 +24,9 @@
 \def\CJKKO@mjhanjafamily{\def\CJK@family{uhcmj}}
 
 % redefine CJK@numbToHex
+\let\CJKKO@orig@numbToHex\CJK@numbToHex
 \def\CJK@numbToHex#1#2{%
-  {\count\z@ #2\relax
-   \count\tw@ \count\z@
-   \divide\count\z@ \sixt@@n
-   \count@ \count\z@
-   \multiply\count@ \sixt@@n
-   \advance\count\tw@ -\count@
-   \xdef#1{%
-     \hexnumber@{\count\z@}\hexnumber@{\count\tw@}}}%
-  % inserted
+  \CJKKO@orig@numbToHex{#1}{#2}%
   \ifx\CJK@family\CJKKO@mjdefault
     \expandafter\CJKKO@checkhanjaplane#1\fi}
 

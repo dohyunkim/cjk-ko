@@ -354,14 +354,12 @@
 \AtBeginDocument{
   \ifx\usecjk@@font\undefined
   \ifx\CJK@charlower\undefined\else
+    \expandafter\let
+    \expandafter\CJKKO@orig@CJKsymbol
+    \csname CJKsymbol \endcsname
     \DeclareRobustCommand{\CJKsymbol}[1]{%
-      \leavevmode\lower\CJK@charlower\hbox{% inserted
-        \symbol{#1}%
-        \ifCJK@bold@
-          \hbox to \CJKboldshift{\hss\symbol{#1}}%
-          \hbox to \CJKboldshift{\hss\symbol{#1}}%
-        \fi
-      }% inserted
+      \leavevmode\lower\CJK@charlower\hbox\bgroup
+        \CJKKO@orig@CJKsymbol{#1}\egroup
     }
   \fi\fi
 }

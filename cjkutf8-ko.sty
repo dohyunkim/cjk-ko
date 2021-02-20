@@ -1,6 +1,6 @@
 %  cjkutf8-ko.sty
 %
-% Copyright (c) 2016 Dohyun Kim <nomos at ktug org>
+% Copyright (c) 2016-2021 Dohyun Kim <nomos at ktug org>
 %
 % This program is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 % MA 02110-1301 USA
 
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{cjkutf8-ko}[2021/01/12 v1.9 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2021/03/01 v1.9 Hangul typesetting on CJKutf8]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname eTeXversion\endcsname\relax
@@ -195,9 +195,7 @@
   \ifx\CJK@scale\undefined\else
     % redefine \CJK@empty
     \let\CJKKO@@empty\CJK@empty
-    \def\CJK@empty#1{%
-      \afterassignment\CJKKO@@empty@insert
-      \CJKKO@@empty{#1}}
+    \def\CJK@empty{\afterassignment\CJKKO@@empty@insert\CJKKO@@empty}
     \def\CJKKO@@empty@insert{\@tempdimb\CJK@scale\@tempdimb}
     % end of redefinition
     \if@hangul % hangul is main language

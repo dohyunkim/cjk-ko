@@ -1,3 +1,9 @@
+2021-03-01      Dohyun Kim <nomos at ktug org>
+
+	Version 1.9
+
+	* cjkutf8-ko.sty: use latex's font family hooks
+
 2016-04-04      Dohyun Kim <nomos at ktug org>
 
 	Version 1.8

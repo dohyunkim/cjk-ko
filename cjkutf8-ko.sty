@@ -394,10 +394,12 @@
 \ifpdf
   \ifx\pdfgentounicode\undefined\else
     \ifx\use@cjk@cmap@\relax\else
-      \InputIfFileExists{glyphtounicode}{%
-        \let\CJK@addcmap\@gobble
-        \pdfgentounicode\@ne
-      }{}
+      \IfFormatAtLeastTF{2021/05/01}
+        {\let\CJK@addcmap\@gobble}
+        {\InputIfFileExists{glyphtounicode}
+          {\let\CJK@addcmap\@gobble \pdfgentounicode\@ne}
+          {}
+        }
     \fi
   \fi
 \fi

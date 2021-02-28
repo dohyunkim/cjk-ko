@@ -3,6 +3,8 @@
 	Version 1.9
 
 	* cjkutf8-ko.sty: use latex's font family hooks
+	* cjkutf8-ko.sty: do not load glyphtounicode.tex when
+	fmtversion >= 2021/05/01
 
 2016-04-04      Dohyun Kim <nomos at ktug org>
 

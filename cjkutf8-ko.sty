@@ -393,13 +393,18 @@
 %%% use pdftex's pdfgentounicode
 \ifpdf
   \ifx\pdfgentounicode\undefined\else
-    \ifx\use@cjk@cmap@\relax\else
-      \IfFormatAtLeastTF{2021/05/01}
-        {\let\CJK@addcmap\@gobble}
+    \ifx\use@cjk@cmap@\relax % truetype
+      \ifx\pdfnobuiltintounicode\undefined\else
+        \let\origin@l@CJK@addcmap\CJK@addcmap
+        \def\CJK@addcmap#1{\origin@l@CJK@addcmap{#1}%
+          \pdfnobuiltintounicode\font@name }
+      \fi
+    \else % type1
+      \IfFormatAtLeastTF{2021/05/01}{}
         {\InputIfFileExists{glyphtounicode}
-          {\let\CJK@addcmap\@gobble \pdfgentounicode\@ne}
-          {}
+          {\pdfgentounicode\@ne}{}
         }
+      \let\CJK@addcmap\@gobble
     \fi
   \fi
 \fi

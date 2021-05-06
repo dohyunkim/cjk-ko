@@ -5,7 +5,7 @@ PDFFILE		= $(NAME)-doc.pdf
 RUNFILES	= $(wildcard *.sty)
 DOCFILES	= $(TEXFILE) $(PDFFILE) README ChangeLog
 ZIPFILE		= $(NAME).zip
-DO_LATEX	= texfot --quiet --tee=/dev/null latex $(TEXFILE)
+DO_LATEX	= texfot --quiet --tee=/dev/null latex-dev $(TEXFILE)
 FORMAT		= latex
 RUNDIR		= $(TEXMFDIR)/tex/$(FORMAT)/$(NAME)
 DOCDIR		= $(TEXMFDIR)/doc/$(FORMAT)/$(NAME)

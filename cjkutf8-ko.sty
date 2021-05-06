@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\NeedsTeXFormat{LaTeX2e}[2021/06/01]
 \ProvidesPackage{cjkutf8-ko}[2021/03/01 v1.9 Hangul typesetting on CJKutf8]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
@@ -160,21 +160,19 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % italic correction after cjk
-\edef\maybe@ic@{%
-  \unexpanded{%
+\AddToHook{cmd/maybe@ic@/before}{%
+  \let\CJKKO@wasCJK\undefined
+  \ifnum\lastkern=\@ne
+    \unkern\unkern
+    \let\CJKKO@wasCJK\empty
+  \fi
+}
+\AddToHook{cmd/maybe@ic@/after}{%
+  \ifx\CJKKO@wasCJK\empty
+    \CJK@CJK
+    \CJKKO@check@next@tok@
     \let\CJKKO@wasCJK\undefined
-    \ifnum\lastkern=\@ne
-      \unkern\unkern
-      \let\CJKKO@wasCJK\empty
-    \fi
-  }%
-  \unexpanded\expandafter{\maybe@ic@
-    \ifx\CJKKO@wasCJK\empty
-      \CJK@CJK
-      \CJKKO@check@next@tok@
-      \let\CJKKO@wasCJK\undefined
-    \fi
-  }%
+  \fi
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,8 +192,7 @@
   \ifx\usecjk@@font\undefined
   \ifx\CJK@scale\undefined\else
     % redefine \CJK@empty
-    \let\CJKKO@@empty\CJK@empty
-    \def\CJK@empty{\afterassignment\CJKKO@@empty@insert\CJKKO@@empty}
+    \AddToHook{cmd/CJK@empty/before}{\afterassignment\CJKKO@@empty@insert}
     \def\CJKKO@@empty@insert{\@tempdimb\CJK@scale\@tempdimb}
     % end of redefinition
     \if@hangul % hangul is main language
@@ -256,11 +253,8 @@
 \sfcode96=998 % `
 \sfcode102=998 % oms {
 \sfcode123=998 % t1 {
-\def\CJK@testLastCJK{%
-  \global\CJK@false
+\AddToHook{cmd/CJK@testLastCJK/after}{%
   \ifnum\lastkern=\@ne
-    \global \CJK@true
-  %%% inserted
   \else
     \ifhmode
     \ifnum\lastkern=\tw@\else
@@ -277,8 +271,8 @@
         \else \CJKglue \fi
       \fi
     \fi\fi\fi\fi\fi
-  %%% end of inserted
-  \fi}
+  \fi
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % half-width puncts
@@ -352,13 +346,8 @@
 \AtBeginDocument{
   \ifx\usecjk@@font\undefined
   \ifx\CJK@charlower\undefined\else
-    \expandafter\let
-    \expandafter\CJKKO@orig@CJKsymbol
-    \csname CJKsymbol \endcsname
-    \DeclareRobustCommand{\CJKsymbol}[1]{%
-      \leavevmode\lower\CJK@charlower\hbox\bgroup
-        \CJKKO@orig@CJKsymbol{#1}\egroup
-    }
+    \AddToHook{cmd/CJKsymbol/before}{\leavevmode\lower\CJK@charlower\hbox\bgroup}
+    \AddToHook{cmd/CJKsymbol/after}{\egroup}
   \fi\fi
 }
 
@@ -395,15 +384,9 @@
   \ifx\pdfgentounicode\undefined\else
     \ifx\use@cjk@cmap@\relax % truetype
       \ifx\pdfnobuiltintounicode\undefined\else
-        \let\origin@l@CJK@addcmap\CJK@addcmap
-        \def\CJK@addcmap#1{\origin@l@CJK@addcmap{#1}%
-          \pdfnobuiltintounicode\font@name }
+        \AddToHook{cmd/CJK@addcmap/after}{\pdfnobuiltintounicode\font@name }
       \fi
     \else % type1
-      \IfFormatAtLeastTF{2021/05/01}{}
-        {\InputIfFileExists{glyphtounicode}
-          {\pdfgentounicode\@ne}{}
-        }
       \let\CJK@addcmap\@gobble
     \fi
   \fi

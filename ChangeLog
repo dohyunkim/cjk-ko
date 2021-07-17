@@ -1,3 +1,13 @@
+2021-07-17      Dohyun Kim <nomos at ktug org>
+
+	Version 2.0
+
+	* cjkutf8-ko.sty: use latex's cmd hooks;
+	allow non-ascii characters in LaTeX labels;
+	redefine MakeUppercase/Lowercase for Latin-1 supplement block;
+	care about fancyvrb's VerbatimOut environment.
+	load konames-utf.sty immediately.
+
 2021-03-01      Dohyun Kim <nomos at ktug org>
 
 	Version 1.9

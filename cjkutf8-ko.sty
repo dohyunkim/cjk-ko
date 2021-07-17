@@ -18,7 +18,7 @@
 % MA 02110-1301 USA
 
 \NeedsTeXFormat{LaTeX2e}[2021/06/01]
-\ProvidesPackage{cjkutf8-ko}[2021/03/01 v1.9 Hangul typesetting on CJKutf8]
+\ProvidesPackage{cjkutf8-ko}[2021/07/17 v2.0 Hangul typesetting on CJKutf8]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname eTeXversion\endcsname\relax
@@ -84,7 +84,6 @@
 % font settings
 \ifx\usecjk@@font\undefined\else
   \PassOptionsToPackage{T1}{CJKutf8}
-  \RequirePackage{textcomp}
   \IfFileExists{t1\CJKKO@mjfont.fd}{\let\rmdefault\CJKKO@mjfont}{}
   \IfFileExists{t1\CJKKO@gtfont.fd}{\let\sfdefault\CJKKO@gtfont}{}
 \fi
@@ -366,7 +365,7 @@
 % hangul captions, labels, and spacing
 \RequirePackage{kolabels-utf}
 \if@hangul
-  \AtBeginDocument{\RequirePackage{konames-utf}}
+  \RequirePackage{konames-utf}
   \linespread{1.3888}
   \footnotesep=1.3888\footnotesep
   \skip\footins=1.3888\skip\footins plus6pt minus3pt
@@ -393,40 +392,106 @@
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
-%%% \makeindex in memoir class clashed with this package.
-%%% cause:  memoir appempts to write index entries to a file
-%%% at the end of document without protecting active characters.
-%%% spotted by Juho Lee. thanks to him.
-%\AtEndDocument{\CJK@makeInactive}
-%%% still conflicts with package verbments.
-%%% so now we make utf8 characters robust.
-\count@"C2 \loop
-  \uccode\count@\count@
-  \lccode\count@\count@
-  \begingroup
-  \lccode`\~\count@
-  \lowercase{\endgroup
-  \protected\edef~{\unexpanded\expandafter{~}}}
-\ifnum\count@<"F4 \advance\count@\@ne \repeat
-% then we have to care about hyperref bookmarks.
+% allow non-cjk characters in labels
+\def\CJK@XX#1#2{%
+  \ifx #2\protect
+    \expandafter\CJK@XXp\expandafter#1%
+  \else
+    \ifincsname \string#1\string#2\else % added
+      \expandafter\ifx\csname u8:\string #1\string #2\endcsname \relax
+        \csname CJK@\number `#1\endcsname{`#2}%
+        \expandafter\expandafter % added wrt allowbreak before (
+        \expandafter\CJK@ignorespaces
+      \else
+        \csname u8:\string #1\string #2\endcsname
+      \fi
+    \fi % added
+  \fi}
+\def\CJK@XXX#1#2#3{%
+  \ifx #2\protect
+    \expandafter\CJK@XXXp\expandafter#1#3%
+  \else
+    \ifincsname \string#1\string#2\string#3\else % added
+      \expandafter\ifx\csname u8:\string #1\string #2\string #3\endcsname \relax
+        \csname CJK@\number `#1\endcsname{`#2}{`#3}%
+        \expandafter\expandafter % added wrt allowbreak before (
+        \expandafter\CJK@ignorespaces
+      \else
+        \csname u8:\string #1\string #2\string #3\endcsname
+      \fi
+    \fi % added
+  \fi}
+\def\CJK@XXXX#1#2#3#4{%
+  \ifx #2\protect
+    \expandafter\CJK@XXXXp\expandafter#1#3%
+  \else
+    \ifincsname \string#1\string#2\string#3\string#4\else % added
+      \csname CJK@\number `#1\endcsname{`#2}{`#3}{`#4}%
+      \expandafter % added wrt allowbreak before (
+      \CJK@ignorespaces
+    \fi % added
+  \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% protect against lowercase
+\count@="80 \loop
+  \lccode\count@=\count@
+  \ifnum\count@<"DF \advance\count@\@ne \repeat
+% redefine MakeUppercase/MakeLowercase
+\DeclareRobustCommand{\MakeUppercase}[1]{{%
+  % begin patch
+  \count@"A0 \loop
+    \ifnum\count@="B7 \else
+      \begingroup
+      \@tempcnta\count@ \advance\@tempcnta-"20
+      \lccode`\~\count@ \lccode`\!\@tempcnta \lccode"C3="C3\relax
+      \lowercase{\endgroup
+        \expandafter\def\csname u8:\string^^c3\string~\endcsname{^^c3!}}%
+    \fi
+  \ifnum\count@<"BE \advance\count@\@ne \repeat
+  % end patch
+  \def\i{I}\def\j{J}%
+  \def\reserved@a##1##2{\let##1##2\reserved@a}%
+  \expandafter\reserved@a\@uclclist\reserved@b{\reserved@b\@gobble}%
+  \let\UTF@two@octets@noexpand\@empty
+  \let\UTF@three@octets@noexpand\@empty
+  \let\UTF@four@octets@noexpand\@empty
+  \protected@edef\reserved@a{\uppercase{#1}}%
+  \reserved@a
+}}
+\DeclareRobustCommand{\MakeLowercase}[1]{{%
+  % begin patch
+  \count@"80 \loop
+    \ifnum\count@="97 \else
+      \begingroup
+      \@tempcnta\count@ \advance\@tempcnta "20
+      \lccode`\~\count@ \lccode`\!\@tempcnta \lccode"C3="C3\relax
+      \lowercase{\endgroup
+        \expandafter\def\csname u8:\string^^c3\string~\endcsname{^^c3!}}%
+    \fi
+  \ifnum\count@<"9E \advance\count@\@ne \repeat
+  % end patch
+  \def\reserved@a##1##2{\let##2##1\reserved@a}%
+  \expandafter\reserved@a\@uclclist\reserved@b{\reserved@b\@gobble}%
+  \let\UTF@two@octets@noexpand\@empty
+  \let\UTF@three@octets@noexpand\@empty
+  \let\UTF@four@octets@noexpand\@empty
+  \protected@edef\reserved@a{\lowercase{#1}}%
+  \reserved@a
+}}
+\protected@edef\MakeUppercase#1{\MakeUppercase{#1}}
+\protected@edef\MakeLowercase#1{\MakeLowercase{#1}}
+
+%%% for fancyvrb/verbments package
+\AddToHook{env/VerbatimOut/begin}{\CJK@makeInactive}
+
+%%% hyperref bookmarks.
 \ifx\pdfstringdefPreHook\undefined
   \let\pdfstringdefPreHook\empty
 \fi
 \g@addto@macro\pdfstringdefPreHook{%
-  \count@"C2 \loop
-  \begingroup
-  \lccode`\~\count@
-  \lowercase{\endgroup
-  \edef~{\unexpanded\expandafter{~}}}%
-  \ifnum\count@<"F4 \advance\count@\@ne \repeat
-  % and dotemph as well
   \let\dotemph\@firstofone
 }
-% protect against lowercase
-\count@"80 \loop
-  \uccode\count@\count@
-  \lccode\count@\count@
-\ifnum\count@<"BF \advance\count@\@ne \repeat
 
 %%% ignore variation selectors for korean hanja
 \DeclareUnicodeCharacter{FE00}{}

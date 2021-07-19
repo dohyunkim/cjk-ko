@@ -54,6 +54,33 @@
   }}{}
 }
 
+% support hangul syllables (0xAC00..0xD7A3)
+\def\cjkko@josa@ea#1#2{%
+  \expandafter\cjkko@josa@hangul@syllable\expandafter{%
+    \number\numexpr ("EA - 224) * 4096 + (`#1 - 128) * 64 + (`#2 - 128) - "AC00\relax }}
+\def\cjkko@josa@eb#1#2{%
+  \expandafter\cjkko@josa@hangul@syllable\expandafter{%
+    \number\numexpr ("EB - 224) * 4096 + (`#1 - 128) * 64 + (`#2 - 128) - "AC00\relax }}
+\def\cjkko@josa@ec#1#2{%
+  \expandafter\cjkko@josa@hangul@syllable\expandafter{%
+    \number\numexpr ("EC - 224) * 4096 + (`#1 - 128) * 64 + (`#2 - 128) - "AC00\relax }}
+\def\cjkko@josa@ed#1#2{%
+  \expandafter\cjkko@josa@hangul@syllable\expandafter{%
+    \number\numexpr ("ED - 224) * 4096 + (`#1 - 128) * 64 + (`#2 - 128) - "AC00\relax }}
+\def\cjkko@josa@hangul@syllable#1{%
+  \ifnum#1<\z@ \else \ifnum#1>11171 \else
+    \expandafter\cjkko@josa@hangul@syllable@\expandafter{%
+      \number\numexpr #1 - (((#1 + 14) / 28 - 1) * 28)\relax % we need floor, not round
+    }%
+  \fi\fi
+}
+\def\cjkko@josa@hangul@syllable@#1{%
+  \ifnum#1=\z@
+    2\else \ifnum#1=8 %
+    1\else
+    0\fi\fi
+}
+
 %%% user commands: \jong \jung \rieul
 \protected\def\jong {\let\josa@str\empty\chardef\@josa\z@ }
 \protected\def\rieul{\let\josa@str\empty\chardef\@josa\@ne}
@@ -62,6 +89,12 @@
 
 \def\makejosa#1#2{%
   \bgroup
+  \begingroup
+    \let^^ea\cjkko@josa@ea
+    \let^^eb\cjkko@josa@eb
+    \let^^ec\cjkko@josa@ec
+    \let^^ed\cjkko@josa@ed
+    \edef\x{\endgroup \def\noexpand\josa@str{\josa@str}}\x
   \expandafter\make@josa\josa@str\@nil{#1}{#2}%
   \egroup}
 

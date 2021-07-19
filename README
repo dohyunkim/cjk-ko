@@ -1,4 +1,4 @@
-CJK-ko package version 2.0 (2021/07/17)
+CJK-ko package version 2.1 (2021/07/20)
 =======================================
 
 This package supports typesetting of modern Korean documents with the help
@@ -148,15 +148,17 @@ example:
 
     \label{fig:aaa} ... \ref{fig:aaa}\을
     \label{fig:aaa} ... \pageref{fig:aaa}\을
-    \cite{hong}\을 ... \bibitem[홍길동\jong]{hong}
+    \cite{hong}\을 ... \bibitem[홍길동]{hong}
+    \cite{king}\을 ... \bibitem[King\jong]{king}
 
 Automatic Josa selection works correctly only after
-\ref \pageref \cite commands and after ascii characters.
+\ref \pageref \cite commands and recognises only the last Ascii
+or Hangul character in the sequence.
 For other cases these commands are available:
 
-    \jung:  keyword is terminated by Jungseong
-    \jong:  keyword is terminated by Jongseong
-    \rieul: keyword is terminated by Jongseong Rieul
+    \jung:  sequence is terminated by Jungseong
+    \jong:  sequence is terminated by Jongseong
+    \rieul: sequence is terminated by Jongseong Rieul
 
 
 Korean counters

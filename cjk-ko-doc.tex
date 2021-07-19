@@ -25,7 +25,7 @@
 \title{\cjkko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize $<$\texttt{nomos at ktug org}$>$ \and
   \normalsize $<$\url{http://github.com/dohyunkim/cjk-ko}$>$}
-\date{Version 2.0\quad \today}
+\date{Version 2.1\quad \today}
 \begin{document}
 \maketitle
 
@@ -39,6 +39,8 @@
 
   1.3 버전부터는 나눔글꼴이 아닌 다른 한글 폰트를 패키지 옵션으로 지정해서 쓸
   수 있다.
+
+  2.1 버전부터는 자동조사가 한글 다음에 올 때도 바르게 동작한다.
 \end{abstract}
 
 \tableofcontents
@@ -123,12 +125,12 @@
       \cs{을} \cs{를} \cs{와} \cs{과} \cs{로} \cs{으로} \cs{라}
       \cs{이라}\,를 쓸 수 있다.
     \item \cs{ref} \cs{pageref} \cs{cite} 뒤에서만 정상 동작
-    \item 아스키문자 뒤에서만 정상 동작
-    \item 한글 뒤에는 \cs{jong} \cs{jung} \cs{rieul} 명령을
-      첨가해 바로잡을 수 있다.\par
+    \item 아스키문자와 한글 뒤에서만 정상 동작
+    \item 사용자가 \cs{jong} \cs{jung} \cs{rieul} 명령을
+      첨가해 조사 선택을 바로잡을 수 있다.\par
       \begin{itemize}
-        \item[예:] \cs{cite\{hong\}}\cs{을} \ldots\\
-                   \hskip1.3em\ \cs{bibitem[홍길동}\cs{jong]\{hong\}}
+        \item[예:] \cs{cite\{king\}}\cs{을} \ldots\\
+                   \hskip1.3em\ \cs{bibitem[King}\cs{jong]\{king\}}
       \end{itemize}
   \end{itemize}
 

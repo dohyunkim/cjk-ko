@@ -17,7 +17,7 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\ProvidesPackage{cjkutf8-josa}[2021/07/17 v2.0 Automatic Josa selection for cjk-ko]
+\ProvidesPackage{cjkutf8-josa}[2021/07/20 v2.1 Automatic Josa selection for cjk-ko]
 
 \AtBeginDocument{
   \ifx\use@josa\undefined\else
@@ -55,23 +55,17 @@
 }
 
 % support hangul syllables (0xAC00..0xD7A3)
-\def\cjkko@josa@ea#1#2{%
+\def\cjkko@josa@ea{\cjkko@josa@hangul@syllableS{"EA}}
+\def\cjkko@josa@eb{\cjkko@josa@hangul@syllableS{"EB}}
+\def\cjkko@josa@ec{\cjkko@josa@hangul@syllableS{"EC}}
+\def\cjkko@josa@ed{\cjkko@josa@hangul@syllableS{"ED}}
+\def\cjkko@josa@hangul@syllableS#1#2#3{%
   \expandafter\cjkko@josa@hangul@syllable\expandafter{%
-    \number\numexpr ("EA - 224) * 4096 + (`#1 - 128) * 64 + (`#2 - 128) - "AC00\relax }}
-\def\cjkko@josa@eb#1#2{%
-  \expandafter\cjkko@josa@hangul@syllable\expandafter{%
-    \number\numexpr ("EB - 224) * 4096 + (`#1 - 128) * 64 + (`#2 - 128) - "AC00\relax }}
-\def\cjkko@josa@ec#1#2{%
-  \expandafter\cjkko@josa@hangul@syllable\expandafter{%
-    \number\numexpr ("EC - 224) * 4096 + (`#1 - 128) * 64 + (`#2 - 128) - "AC00\relax }}
-\def\cjkko@josa@ed#1#2{%
-  \expandafter\cjkko@josa@hangul@syllable\expandafter{%
-    \number\numexpr ("ED - 224) * 4096 + (`#1 - 128) * 64 + (`#2 - 128) - "AC00\relax }}
+    \number\numexpr (#1 - 224) * 4096 + (`#2 - 128) * 64 + (`#3 - 128) - "AC00\relax }}
 \def\cjkko@josa@hangul@syllable#1{%
   \ifnum#1<\z@ \else \ifnum#1>11171 \else
     \expandafter\cjkko@josa@hangul@syllable@\expandafter{%
-      \number\numexpr #1 - (((#1 + 14) / 28 - 1) * 28)\relax % we need floor, not round
-    }%
+      \number\numexpr #1 - (((#1 + 14) / 28 - 1) * 28)\relax }% we need floor, not round
   \fi\fi
 }
 \def\cjkko@josa@hangul@syllable@#1{%
@@ -94,6 +88,7 @@
     \let^^eb\cjkko@josa@eb
     \let^^ec\cjkko@josa@ec
     \let^^ed\cjkko@josa@ed
+    \let\protect\noexpand
     \edef\x{\endgroup \def\noexpand\josa@str{\josa@str}}\x
   \expandafter\make@josa\josa@str\@nil{#1}{#2}%
   \egroup}

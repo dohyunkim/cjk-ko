@@ -93,6 +93,11 @@
   \expandafter\make@josa\josa@str\@nil{#1}{#2}%
   \egroup}
 
+\begingroup
+\catcode`a=11 \global\let\cjkko@cat@letter=a\relax
+\catcode`0=12 \global\let\cjkko@cat@other=0\relax
+\endgroup
+
 \def\make@josa{\afterassignment\make@@josa\let\@let@token= }
 \def\make@@josa{%
   \ifx\@let@token\@nil
@@ -110,10 +115,14 @@
     \ifx\@let@token L\rieul\else
     \ifx\@let@token M\jong \else
     \ifx\@let@token N\jong \else
-    \ifx\@let@token\jong \jong \else
-    \ifx\@let@token\rieul\rieul\else
-      \jung
-    \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+    \ifcat\noexpand\@let@token\cjkko@cat@other \jung\else
+    \ifcat\noexpand\@let@token\cjkko@cat@letter\jung\else
+    \ifx\@let@token ^^c2\jung \else
+    \ifx\@let@token ^^c3\jung \else
+    \ifx\@let@token\jong \jong\else
+    \ifx\@let@token\jung \jung\else
+    \ifx\@let@token\rieul\rieul
+    \fi\fi\fi\fi\fi \fi\fi\fi\fi\fi \fi\fi\fi\fi\fi \fi\fi\fi\fi
     \expandafter\make@josa
   \fi}
 

@@ -43,6 +43,25 @@
       \def\hyperlink##1##2{##2}% for beamer: not from kotexutf
       \xdef\josa@str{#1}%
       \egroup}
+    % partially support biblatex's \cite
+    \@ifpackageloaded{biblatex}{%
+      \renewrobustcmd*{\blx@imc@printfield}[2][]{%
+      \blx@imc@iffieldundef{#2}
+        {\blx@nounit}
+        {\blx@getformat\blx@theformat{ffd}{#1}{#2}%
+         \ifdefvoid\blx@theformat
+           {\blx@nounit}
+           {\blx@begunit
+            \edef\currentfield{#2}%
+            \expandafter\expandafter
+            \expandafter\blx@theformat
+            \expandafter\expandafter
+            \expandafter{\csname abx@field@#2\endcsname}%
+                      \begingroup
+                      \let\protect\noexpand
+                      \xdef\josa@str{\csname abx@field@#2\endcsname}%
+                      \endgroup
+            \blx@endunit}}}}{}
   \fi
   \@ifpackageloaded{hyperref}{\g@addto@macro\pdfstringdefPreHook{%
       \let\jong\relax
@@ -91,7 +110,7 @@
     \let\protect\noexpand
     \edef\x{\endgroup \def\noexpand\josa@str{\josa@str}}\x
   \expandafter\make@josa\josa@str\@nil{#1}{#2}%
-  \egroup}
+  \egroup\jung}
 
 \begingroup
 \catcode`a=11 \global\let\cjkko@cat@letter=a\relax

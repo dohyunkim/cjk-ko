@@ -24,24 +24,20 @@
     % redefine \@setref
     \let\CJKKO@orig@setref\@setref
     \def\@setref#1#2#3{\CJKKO@orig@setref{#1}{#2}{#3}%
-      \bgroup
       \ifx#1\relax\else
         \ifx\protect\relax % not from kotexutf
-          \let\protect\noexpand % not from kotexutf
-          \xdef\josa@str{\expandafter#2#1}%
+          \cjkko@prepare@josa@str{\expandafter#2#1}%
         \fi
-      \fi
-      \egroup}
+      \fi }
     % redefine \@cite@ofmt
     \let\CJKKO@orig@cite@ofmt\@cite@ofmt
     \def\@cite@ofmt#1{\CJKKO@orig@cite@ofmt{#1}%
       \bgroup
-      \let\protect\noexpand % not from kotexutf
       \let\@safe@activesfalse\@empty % babel ?
       \def\hyper@@link[##1]##2##3##4{##4}%
       \def\beamer@sort##1##2{}%
       \def\hyperlink##1##2{##2}% for beamer: not from kotexutf
-      \xdef\josa@str{#1}%
+      \cjkko@prepare@josa@str{#1}%
       \egroup}
     % partially support biblatex's \cite
     \@ifpackageloaded{biblatex}{%
@@ -57,10 +53,7 @@
             \expandafter\blx@theformat
             \expandafter\expandafter
             \expandafter{\csname abx@field@#2\endcsname}%
-                      \begingroup
-                      \let\protect\noexpand
-                      \xdef\josa@str{\csname abx@field@#2\endcsname}%
-                      \endgroup
+                    \cjkko@prepare@josa@str{\csname abx@field@#2\endcsname}%
             \blx@endunit}}}}{}
   \fi
   \@ifpackageloaded{hyperref}{\g@addto@macro\pdfstringdefPreHook{%
@@ -94,22 +87,28 @@
     0\fi\fi
 }
 
+\def\cjkko@prepare@josa@str#1{%
+  \begingroup
+  \let^^ea\cjkko@josa@ea
+  \let^^eb\cjkko@josa@eb
+  \let^^ec\cjkko@josa@ec
+  \let^^ed\cjkko@josa@ed
+  \let\protect\noexpand
+  \xdef\josa@str{#1}%
+  \endgroup
+}
+
 %%% user commands: \jong \jung \rieul
 \protected\def\jong {\let\josa@str\empty\chardef\@josa\z@ }
 \protected\def\rieul{\let\josa@str\empty\chardef\@josa\@ne}
 \protected\def\jung {\let\josa@str\empty\chardef\@josa\tw@}
 \jung
 
+\def\cjkko@josa@str@end{cjkko@josa@str@end}
+
 \def\makejosa#1#2{%
   \bgroup
-  \begingroup
-    \let^^ea\cjkko@josa@ea
-    \let^^eb\cjkko@josa@eb
-    \let^^ec\cjkko@josa@ec
-    \let^^ed\cjkko@josa@ed
-    \let\protect\noexpand
-    \edef\x{\endgroup \def\noexpand\josa@str{\josa@str}}\x
-  \expandafter\make@josa\josa@str\@nil{#1}{#2}%
+  \expandafter\make@josa\josa@str\cjkko@josa@str@end{#1}{#2}%
   \egroup\jung}
 
 \begingroup
@@ -119,7 +118,7 @@
 
 \def\make@josa{\afterassignment\make@@josa\let\@let@token= }
 \def\make@@josa{%
-  \ifx\@let@token\@nil
+  \ifx\@let@token\cjkko@josa@str@end
     \expandafter\make@@@josa
   \else
     \ifx\@let@token 1\rieul\else

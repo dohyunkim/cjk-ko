@@ -25,9 +25,7 @@
     \let\CJKKO@orig@setref\@setref
     \def\@setref#1#2#3{\CJKKO@orig@setref{#1}{#2}{#3}%
       \ifx#1\relax\else
-        \ifx\protect\relax % not from kotexutf
-          \cjkko@prepare@josa@str{\expandafter#2#1}%
-        \fi
+        \cjkko@prepare@josa@str{\expandafter#2#1}%
       \fi }
     % redefine \@cite@ofmt
     \let\CJKKO@orig@cite@ofmt\@cite@ofmt
@@ -88,14 +86,16 @@
 }
 
 \def\cjkko@prepare@josa@str#1{%
-  \begingroup
-  \let^^ea\cjkko@josa@ea
-  \let^^eb\cjkko@josa@eb
-  \let^^ec\cjkko@josa@ec
-  \let^^ed\cjkko@josa@ed
-  \let\protect\noexpand
-  \xdef\josa@str{#1}%
-  \endgroup
+  \ifx\protect\relax
+    \begingroup
+      \let^^ea\cjkko@josa@ea
+      \let^^eb\cjkko@josa@eb
+      \let^^ec\cjkko@josa@ec
+      \let^^ed\cjkko@josa@ed
+      \let\protect\noexpand
+      \xdef\josa@str{#1}%
+    \endgroup
+  \fi
 }
 
 %%% user commands: \jong \jung \rieul
@@ -106,10 +106,14 @@
 
 \def\cjkko@josa@str@end{cjkko@josa@str@end}
 
-\def\makejosa#1#2{%
+\def\makejosa{%
   \bgroup
-  \expandafter\make@josa\josa@str\cjkko@josa@str@end{#1}{#2}%
-  \egroup\jung}
+  \expandafter\make@josa\josa@str\cjkko@josa@str@end
+  \expandafter\egroup
+  \expandafter\count@\number\@josa\relax
+  \jung
+  \make@@@josa
+}
 
 \begingroup
 \catcode`a=11 \global\let\cjkko@cat@letter=a\relax
@@ -119,7 +123,6 @@
 \def\make@josa{\afterassignment\make@@josa\let\@let@token= }
 \def\make@@josa{%
   \ifx\@let@token\cjkko@josa@str@end
-    \expandafter\make@@@josa
   \else
     \ifx\@let@token 1\rieul\else
     \ifx\@let@token 3\jong \else
@@ -144,11 +147,20 @@
     \expandafter\make@josa
   \fi}
 
-\def\make@@@josa#1#2{%
-  \ifcase\@josa #2% jong
-  \or \ifx\empty#1\empty\else#2\fi % rieul
-  \else #1% jung
-  \fi}
+\def\make@@@josa{%
+  \ifcase\count@
+    \expandafter\@secondoftwo
+  \or
+    \expandafter\make@@@@josa
+  \else
+    \expandafter\@firstoftwo
+  \fi
+}
+\def\make@@@@josa#1{%
+  \ifx\empty#1\empty
+    \expandafter\@gobble
+  \fi
+}
 
 \def\error@josa{\PackageError{cjkutf8-josa}{Undefined Control Sequence}{}}
 

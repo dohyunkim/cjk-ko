@@ -1,3 +1,10 @@
+2021-07-26      Dohyun Kim <nomos at ktug org>
+
+	Version 2.2
+
+	* cjkutf8-josa.sty: partially support josa selection after
+	biblatex's \cite command
+
 2021-07-20      Dohyun Kim <nomos at ktug org>
 
 	Version 2.1

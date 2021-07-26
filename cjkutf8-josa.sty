@@ -159,40 +159,59 @@
 \def\make@@@@josa#1{%
   \ifx\empty#1\empty
     \expandafter\@gobble
+  \else
+    \expandafter\@firstofone
   \fi
 }
 
 \def\error@josa{\PackageError{cjkutf8-josa}{Undefined Control Sequence}{}}
+\def\makejosa@ga@i{\makejosa{가}{이}}
+\def\makejosa@wa@gwa{\makejosa{와}{과}}
+\def\makejosa@neun@eun{\makejosa{는}{은}}
+\def\makejosa@ra@ira{\makejosa{라}{이라}}
+\def\makejosa@empty@eu@ro{\makejosa{}{으}로}
+\def\makejosa@reul@eul{\makejosa{를}{을}}
+\def\makejosa@empty@eu{\makejosa{}{으}}
+\def\makejosa@relax@i{\makejosa\relax{이}}
 
 \DeclareRobustCommand*\^^ea[2]{%
-  \ifx#1^^b0\ifx#2^^80\makejosa{가}{이}\else\error@josa\fi % \가
-  \else\ifx#1^^b3\ifx#2^^bc\makejosa{와}{과}\else\error@josa\fi % \과
-  \else\error@josa\fi\fi}
+  \ifx#1^^b0\ifx#2^^80\let\do@makejosa\makejosa@ga@i % \가
+    \else\let\do@makejosa\error@josa \fi
+  \else\ifx#1^^b3\ifx#2^^bc\let\do@makejosa\makejosa@wa@gwa % \과
+    \else\let\do@makejosa\error@josa \fi
+  \else\let\do@makejosa\error@josa \fi\fi
+  \do@makejosa}
 \DeclareRobustCommand*\^^eb[2]{%
-  \ifx#1^^8a\ifx#2^^94\makejosa{는}{은}\else\error@josa\fi % \는
-  \else\ifx#1^^9d\ifx#2^^bc\makejosa{라}{이라}\else\error@josa\fi % \라
-  \else\ifx#1^^a1\ifx#2^^9c\makejosa{}{으}로\else\error@josa\fi % \로
-  \else\ifx#1^^a5\ifx#2^^bc\makejosa{를}{을}\else\error@josa\fi % \를
-  \else\error@josa\fi\fi\fi\fi}
+  \ifx#1^^8a\ifx#2^^94\let\do@makejosa\makejosa@neun@eun % \는
+    \else\let\do@makejosa\error@josa \fi
+  \else\ifx#1^^9d\ifx#2^^bc\let\do@makejosa\makejosa@ra@ira % \라
+    \else\let\do@makejosa\error@josa \fi
+  \else\ifx#1^^a1\ifx#2^^9c\let\do@makejosa\makejosa@empty@eu@ro % \로
+    \else\let\do@makejosa\error@josa \fi
+  \else\ifx#1^^a5\ifx#2^^bc\let\do@makejosa\makejosa@reul@eul % \를
+    \else\let\do@makejosa\error@josa \fi
+  \else\let\do@makejosa\error@josa \fi\fi\fi\fi
+  \do@makejosa}
 \DeclareRobustCommand*\^^ec[2]{%
   \let\reserved@a#1\let\reserved@b#2%
   \futurelet\@let@token\@josa@begin@ec}
 \def\@josa@begin@ec{%
-  \ifx\reserved@a^^99%
-    \ifx\reserved@b^^80\makejosa{와}{과}\else\error@josa\fi % \와
-  \else\ifx\reserved@a^^9c%
-    \ifx\reserved@b^^bc\makejosa{}{으}\else\error@josa\fi % \으로
+  \ifx\reserved@a^^99\ifx\reserved@b^^80\let\do@makejosa\makejosa@wa@gwa % \와
+    \else\let\do@makejosa\error@josa \fi
+  \else\ifx\reserved@a^^9c\ifx\reserved@b^^bc\let\do@makejosa\makejosa@empty@eu % \으로
+    \else\let\do@makejosa\error@josa \fi
   \else\ifx\reserved@a^^9d%
-    \ifx\reserved@b^^80\makejosa{는}{은}% \은
-    \else\ifx\reserved@b^^84\makejosa{를}{을}% \을
+    \ifx\reserved@b^^80\let\do@makejosa\makejosa@neun@eun % \은
+    \else\ifx\reserved@b^^84\let\do@makejosa\makejosa@reul@eul % \을
     \else\ifx\reserved@b^^b4%
-      \ifx\@let@token^^ea\makejosa\relax{이}% \이라
-      \else\ifx\@let@token^^eb\makejosa\relax{이}% \이라
-      \else\ifx\@let@token^^ec\makejosa\relax{이}% \이라
-      \else\ifx\@let@token^^ed\makejosa\relax{이}% \이라
-      \else\makejosa{가}{이}% \이
+      \ifx\@let@token^^ea\let\do@makejosa\makejosa@relax@i % \이라
+      \else\ifx\@let@token^^eb\let\do@makejosa\makejosa@relax@i % \이라
+      \else\ifx\@let@token^^ec\let\do@makejosa\makejosa@relax@i % \이라
+      \else\ifx\@let@token^^ed\let\do@makejosa\makejosa@relax@i % \이라
+      \else\let\do@makejosa\makejosa@ga@i % \이
       \fi\fi\fi\fi
-    \else\error@josa \fi\fi\fi
-  \else\error@josa \fi\fi\fi}
+    \else\let\do@makejosa\error@josa \fi\fi\fi
+  \else\let\do@makejosa\error@josa \fi\fi\fi
+  \do@makejosa}
 
 \endinput

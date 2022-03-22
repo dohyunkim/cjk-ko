@@ -20,13 +20,6 @@
 \NeedsTeXFormat{LaTeX2e}[2022/06/01]
 \ProvidesPackage{cjkutf8-ko}[2022/06/02 v2.3 Hangul typesetting on CJKutf8]
 
-\begingroup\expandafter\expandafter\expandafter\endgroup
-\expandafter\ifx\csname eTeXversion\endcsname\relax
-  \PackageError{cjkutf8-ko}
-    {e-TeX engine is required}
-    {Please update your TeX system to the latest distribution}
-\endinput\fi
-
 \newif\if@hangul
 \newif\if@hanja
 \let\use@josa\empty

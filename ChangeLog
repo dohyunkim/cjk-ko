@@ -1,3 +1,11 @@
+2022-06-02      Dohyun Kim <nomos at ktug org>
+
+	Version 2.3
+
+	* cjkutf8-ko.sty: remove redefinitions of MakeUppercase and
+	MakeLowercase, being not needed with LaTeX kernel 2022/06;
+	use keyval-based option processing of LaTeX kernel 2022/06.
+
 2021-07-26      Dohyun Kim <nomos at ktug org>
 
 	Version 2.2

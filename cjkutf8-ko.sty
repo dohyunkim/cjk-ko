@@ -1,6 +1,6 @@
 %  cjkutf8-ko.sty
 %
-% Copyright (c) 2016-2021 Dohyun Kim <nomos at ktug org>
+% Copyright (c) 2016-2022 Dohyun Kim <nomos at ktug org>
 %
 % This program is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 % Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 % MA 02110-1301 USA
 
-\NeedsTeXFormat{LaTeX2e}[2021/06/01]
-\ProvidesPackage{cjkutf8-ko}[2021/07/26 v2.2 Hangul typesetting on CJKutf8]
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+\ProvidesPackage{cjkutf8-ko}[2022/06/02 v2.3 Hangul typesetting on CJKutf8]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname eTeXversion\endcsname\relax
@@ -31,41 +31,38 @@
 \newif\if@hanja
 \let\use@josa\empty
 
-\DeclareOption{hangul}{\@hangultrue}
-\DeclareOption{hanja}{\@hanjatrue\@hangultrue}
-\DeclareOption{usecjkt1font}{\let\usecjk@@font\empty\@hangultrue}
-\DeclareOption{usedotemph}{\let\usedot@mph\empty}
-\DeclareOption{nojosa}{\let\use@josa\undefined}
-\DeclareOption{truetype}{\let\use@cjk@cmap@\relax}
-\DeclareOption*{\expandafter\CJKKO@userfont@option\CurrentOption=\end}
-\def\CJKKO@userfont@option#1=#2\end{%
-  \ifx\empty#2\empty
-    \PassOptionsToPackage{#1}{CJKutf8}
-  \else
-    \def\reserved@a{mj}\def\reserved@b{gt}\def\reserved@c{#1}
-    \ifx\reserved@a\reserved@c
-      \edef\CJKKO@mjfont{\CJKKO@removetrailingEQ#2}
-      \IfFileExists{c70\CJKKO@mjfont.fd}{}{%
-        \PackageError{cjkutf8-ko}{`c70\CJKKO@mjfont.fd' does not exist}{}
-        \let\CJKKO@mjfont\undefined
-      }
-    \else
-      \ifx\reserved@b\reserved@c
-        \edef\CJKKO@gtfont{\CJKKO@removetrailingEQ#2}
-        \IfFileExists{c70\CJKKO@gtfont.fd}{}{%
-          \PackageError{cjkutf8-ko}{`c70\CJKKO@gtfont.fd' does not exist}{}
-          \let\CJKKO@gtfont\undefined
-        }
-      \else
-        \PackageError{cjkutf8-ko}
-          {Unknown hangul font type: #1}
-          {Allowed font types are `mj' and `gt'}
-      \fi
-    \fi
-  \fi
+\DeclareKeys
+{
+  hangul.code         = \@hangultrue                        ,
+  hangul.usage        = load                                ,
+  hanja.code          = \@hanjatrue\@hangultrue             ,
+  hanja.usage         = load                                ,
+  usecjkt1font.code   = \let\usecjk@@font\empty\@hangultrue ,
+  usecjkt1font.usage  = load                                ,
+  usedotemph.code     = \let\usedot@mph\empty               ,
+  usedotemph.usage    = load                                ,
+  nojosa.code         = \let\use@josa\undefined             ,
+  nojosa.usage        = preamble                            ,
+  truetype.code       = \let\use@cjk@cmap@\relax            ,
+  truetype.usage      = load                                ,
+  mj.code             = \def\CJKKO@mjfont{#1}               ,
+  mj.usage            = load                                ,
+  gt.code             = \def\CJKKO@gtfont{#1}               ,
+  gt.usage            = load
 }
-\def\CJKKO@removetrailingEQ#1={#1}
-\ProcessOptions\relax
+\DeclareUnknownKeyHandler{\PassOptionsToPackage{#1}{CJKutf8}}
+\ProcessKeyOptions
+
+\ifdefined\CJKKO@mjfont
+  \IfFileExists{c70\CJKKO@mjfont.fd}{}{%
+    \PackageError{cjkutf8-ko}{`c70\CJKKO@mjfont.fd' does not exist}{}
+    \let\CJKKO@mjfont\undefined }
+\fi
+\ifdefined\CJKKO@gtfont
+  \IfFileExists{c70\CJKKO@gtfont.fd}{}{%
+    \PackageError{cjkutf8-ko}{`c70\CJKKO@gtfont.fd' does not exist}{}
+    \let\CJKKO@gtfont\undefined }
+\fi
 
 \ifx\CJKKO@mjfont\undefined
   \IfFileExists{c70nanummj.fd}{\def\CJKKO@mjfont{nanummj}}{
@@ -431,56 +428,6 @@
       \CJK@ignorespaces
     \fi % added
   \fi}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%
-% protect against lowercase
-\count@="80 \loop
-  \lccode\count@=\count@
-  \ifnum\count@<"DF \advance\count@\@ne \repeat
-% redefine MakeUppercase/MakeLowercase
-\DeclareRobustCommand{\MakeUppercase}[1]{{%
-  % begin patch
-  \count@"A0 \loop
-    \ifnum\count@="B7 \else
-      \begingroup
-      \@tempcnta\count@ \advance\@tempcnta-"20
-      \lccode`\~\count@ \lccode`\!\@tempcnta \lccode"C3="C3\relax
-      \lowercase{\endgroup
-        \expandafter\def\csname u8:\string^^c3\string~\endcsname{^^c3!}}%
-    \fi
-  \ifnum\count@<"BE \advance\count@\@ne \repeat
-  % end patch
-  \def\i{I}\def\j{J}%
-  \def\reserved@a##1##2{\let##1##2\reserved@a}%
-  \expandafter\reserved@a\@uclclist\reserved@b{\reserved@b\@gobble}%
-  \let\UTF@two@octets@noexpand\@empty
-  \let\UTF@three@octets@noexpand\@empty
-  \let\UTF@four@octets@noexpand\@empty
-  \protected@edef\reserved@a{\uppercase{#1}}%
-  \reserved@a
-}}
-\DeclareRobustCommand{\MakeLowercase}[1]{{%
-  % begin patch
-  \count@"80 \loop
-    \ifnum\count@="97 \else
-      \begingroup
-      \@tempcnta\count@ \advance\@tempcnta "20
-      \lccode`\~\count@ \lccode`\!\@tempcnta \lccode"C3="C3\relax
-      \lowercase{\endgroup
-        \expandafter\def\csname u8:\string^^c3\string~\endcsname{^^c3!}}%
-    \fi
-  \ifnum\count@<"9E \advance\count@\@ne \repeat
-  % end patch
-  \def\reserved@a##1##2{\let##2##1\reserved@a}%
-  \expandafter\reserved@a\@uclclist\reserved@b{\reserved@b\@gobble}%
-  \let\UTF@two@octets@noexpand\@empty
-  \let\UTF@three@octets@noexpand\@empty
-  \let\UTF@four@octets@noexpand\@empty
-  \protected@edef\reserved@a{\lowercase{#1}}%
-  \reserved@a
-}}
-\protected@edef\MakeUppercase#1{\MakeUppercase{#1}}
-\protected@edef\MakeLowercase#1{\MakeLowercase{#1}}
 
 %%% for fancyvrb/verbments package
 \AddToHook{env/VerbatimOut/begin}{\CJK@makeInactive}

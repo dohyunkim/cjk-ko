@@ -135,26 +135,36 @@
   \end{itemize}
 
 \section{한글 카운터}
-\koTeX\ 패키지와 동일하다. 사용례: \cs{pagenumbering\{onum\}}
-\begin{itemize}\leftskip=1cm \labelsep=1em \itemsep=0pt plus0pt
-      \def\cs#1{\texttt{\bfseries #1}}
-  \item[\cs{jaso}] ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅅ ㅇ ㅈ ㅊ ㅋ ㅌ ㅍ ㅎ
-  \item[\cs{gana}] 가 나 다 라 마 바 사 아 자 차 카 타 파 하
-  \item[\cs{ojaso}] ㉠ ㉡ ㉢ ㉣ ㉤ ㉥ ㉦ ㉧ ㉨ ㉩ ㉪ ㉫ ㉬ ㉭
-  \item[\cs{ogana}] ㉮ ㉯ ㉰ ㉱ ㉲ ㉳ ㉴ ㉵ ㉶ ㉷ ㉸ ㉹ ㉺ ㉻
-  \item[\cs{pjaso}] ㈀ ㈁ ㈂ ㈃ ㈄ ㈅ ㈆ ㈇ ㈈ ㈉ ㈊ ㈋ ㈌ ㈍
-  \item[\cs{pgana}] ㈎ ㈏ ㈐ ㈑ ㈒ ㈓ ㈔ ㈕ ㈖ ㈗ ㈘ ㈙ ㈚ ㈛
-  \item[\cs{onum}]  ① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬ ⑭ ⑮
-  \item[\cs{pnum}] ⑴ ⑵ ⑶ ⑷ ⑸ ⑹ ⑺ ⑻ ⑼ ⑽ ⑾ ⑿ ⒀ ⒁ ⒂
-  \item[\cs{oeng}] ⓐ ⓑ ⓒ ⓓ ⓔ ⓕ ⓖ ⓗ ⓘ ⓙ ⓚ ⓛ $\cdots$ ⓩ
-  \item[\cs{peng}] ⒜ ⒝ ⒞ ⒟ ⒠ ⒡ ⒢ ⒣ ⒤ ⒥ ⒦ ⒧ $\cdots$ ⒵
-  \item[\cs{hnum}] 하나 둘 셋 넷 다섯 여섯 일곱 여덟 아홉 열 열하나 $\cdots$ 스물넷
-  \item[\cs{Hnum}] 첫 둘 셋 넷 다섯 여섯 일곱 여덟 아홉 열 열한 $\cdots$ 스물넷
-  \item[\cs{hroman}] ⅰ ⅱ ⅲ ⅳ ⅴ ⅵ ⅶ ⅷ ⅸ ⅹ ⅺ ⅻ
-  \item[\cs{hRoman}] Ⅰ Ⅱ Ⅲ Ⅳ Ⅴ Ⅵ Ⅶ Ⅷ Ⅸ Ⅹ Ⅺ Ⅻ
-  \item[\cs{hNum}] 일 이 삼 사 오 육 칠 팔 구 십 십일 십이 $\cdots$ 이십사
-  \item[\cs{hanjanum}] 一 二 三 四 五 六 七 八 九 十 十一 十二 $\cdots$ 二十四
-\end{itemize}
+
+\begin{table}
+    \centering
+    \def\cs#1{\texttt{\bfseries #1}}
+  \begin{tabular}{rl}\\
+    \hline
+    \cs{jaso}& ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅅ ㅇ ㅈ ㅊ ㅋ ㅌ ㅍ ㅎ\\
+    \cs{gana}& 가 나 다 라 마 바 사 아 자 차 카 타 파 하\\
+    \cs{ojaso}& ㉠ ㉡ ㉢ ㉣ ㉤ ㉥ ㉦ ㉧ ㉨ ㉩ ㉪ ㉫ ㉬ ㉭\\
+    \cs{ogana}& ㉮ ㉯ ㉰ ㉱ ㉲ ㉳ ㉴ ㉵ ㉶ ㉷ ㉸ ㉹ ㉺ ㉻\\
+    \cs{pjaso}& ㈀ ㈁ ㈂ ㈃ ㈄ ㈅ ㈆ ㈇ ㈈ ㈉ ㈊ ㈋ ㈌ ㈍\\
+    \cs{pgana}& ㈎ ㈏ ㈐ ㈑ ㈒ ㈓ ㈔ ㈕ ㈖ ㈗ ㈘ ㈙ ㈚ ㈛\\
+    \cs{onum}&  ① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬ ⑭ ⑮\\
+    \cs{pnum}& ⑴ ⑵ ⑶ ⑷ ⑸ ⑹ ⑺ ⑻ ⑼ ⑽ ⑾ ⑿ ⒀ ⒁ ⒂\\
+    \cs{oeng}& ⓐ ⓑ ⓒ ⓓ ⓔ ⓕ ⓖ ⓗ ⓘ ⓙ ⓚ ⓛ $\cdots$ ⓩ\\
+    \cs{peng}& ⒜ ⒝ ⒞ ⒟ ⒠ ⒡ ⒢ ⒣ ⒤ ⒥ ⒦ ⒧ $\cdots$ ⒵\\
+    \cs{hnum}& 하나 둘 셋 넷 다섯 여섯 일곱 여덟 아홉 열 열하나 $\cdots$ 스물넷\\
+    \cs{Hnum}& 첫 둘 셋 넷 다섯 여섯 일곱 여덟 아홉 열 열한 $\cdots$ 스물넷\\
+    \cs{hroman}& ⅰ ⅱ ⅲ ⅳ ⅴ ⅵ ⅶ ⅷ ⅸ ⅹ ⅺ ⅻ\\
+    \cs{hRoman}& Ⅰ Ⅱ Ⅲ Ⅳ Ⅴ Ⅵ Ⅶ Ⅷ Ⅸ Ⅹ Ⅺ Ⅻ\\
+    \cs{hNum}& 일 이 삼 사 오 육 칠 팔 구 십 십일 십이 $\cdots$ 이십사\\
+    \cs{hanjanum}& 一 二 三 四 五 六 七 八 九 十 十一 十二 $\cdots$ 二十四\\
+    \hline
+  \end{tabular}
+  \caption{한글 카운터 목록}\label{hangulcounters}
+\end{table}
+
+\koTeX\ 패키지와 동일하다.
+표~\ref{hangulcounters}\를 참조.
+사용례: \cs{pagenumbering\{onum\}}
 
 \section{\texttt{kotex.sty}}
 다양한 \koTeX\ 패키지로의 준자동적인 연결을 담당하는 스타일 파일이다.

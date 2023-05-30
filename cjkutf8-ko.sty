@@ -146,6 +146,12 @@
 \CJKspace
 \CJK@envStart{}{UTF8}{\CJKKO@mjfont}
 \makeatletter
+% protect utf8 octets
+\count@"80 \loop
+  \begingroup
+  \lccode`\~\count@
+  \lowercase{\endgroup \protected\edef~{\unexpanded\expandafter{~}}}
+\ifnum\count@<"F4 \advance\count@\@ne \repeat
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % italic correction after cjk
@@ -423,7 +429,7 @@
   \fi}
 
 %%% for fancyvrb/verbments package
-\AddToHook{env/VerbatimOut/begin}{\CJK@makeInactive}
+%\AddToHook{env/VerbatimOut/begin}{\CJK@makeInactive}
 
 %%% hyperref bookmarks.
 \ifx\pdfstringdefPreHook\undefined

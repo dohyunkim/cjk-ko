@@ -1,3 +1,9 @@
+2023-05-31      Dohyun Kim <nomos at ktug org>
+
+	Version 2.4
+
+	* cjkutf8-ko.sty: protect utf8 octets
+
 2022-06-12      Dohyun Kim <nomos at ktug org>
 
 	Version 2.3

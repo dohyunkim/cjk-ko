@@ -25,6 +25,17 @@
     \ifx#1\relax\else
       \cjkko@prepare@josa@str{\expandafter#2#1}%
     \fi }
+  % redefine \@cite@ofmt
+  \AtBeginDocument{
+    \let\CJKKO@orig@cite@ofmt\@cite@ofmt
+    \def\@cite@ofmt#1{\CJKKO@orig@cite@ofmt{#1}%
+      \bgroup
+      \let\@safe@activesfalse\@empty % babel ?
+      \def\hyper@@link[##1]##2##3##4{##4}%
+      \def\beamer@sort##1##2{}%
+      \def\hyperlink##1##2{##2}% for beamer: not from kotexutf
+      \cjkko@prepare@josa@str{#1}%
+      \egroup}}
   % partially support biblatex's \cite
   \AddToHook{package/biblatex/after}{%
     \renewrobustcmd*{\blx@imc@printfield}[2][]{%
@@ -42,21 +53,6 @@
                     \cjkko@prepare@josa@str{\csname abx@field@#2\endcsname}%
             \blx@endunit}}}}
 \fi
-
-\AtBeginDocument{
-  \ifx\use@josa\undefined\else
-    % redefine \@cite@ofmt
-    \let\CJKKO@orig@cite@ofmt\@cite@ofmt
-    \def\@cite@ofmt#1{\CJKKO@orig@cite@ofmt{#1}%
-      \bgroup
-      \let\@safe@activesfalse\@empty % babel ?
-      \def\hyper@@link[##1]##2##3##4{##4}%
-      \def\beamer@sort##1##2{}%
-      \def\hyperlink##1##2{##2}% for beamer: not from kotexutf
-      \cjkko@prepare@josa@str{#1}%
-      \egroup}
-  \fi
-}
 
 \AddToHook{package/hyperref/after}{\g@addto@macro\pdfstringdefPreHook{%
   \let\jong\relax

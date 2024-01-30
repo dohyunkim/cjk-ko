@@ -24,9 +24,7 @@
 \def\CJKKO@mjhanjafamily{\def\CJK@family{uhcmj}}
 
 % redefine CJK@numbToHex
-\let\CJKKO@orig@numbToHex\CJK@numbToHex
-\def\CJK@numbToHex#1#2{%
-  \CJKKO@orig@numbToHex{#1}{#2}%
+\AddToHookWithArguments{cmd/CJK@numbToHex/after}{%
   \ifx\CJK@family\CJKKO@mjdefault
     \expandafter\CJKKO@checkhanjaplane#1\fi}
 

@@ -1,3 +1,9 @@
+2024-03-01      Dohyun Kim <nomos at ktug org>
+
+	Version 2.5
+
+	* cjkutf8-*.sty: use LaTeX's hook mechanism
+
 2023-05-31      Dohyun Kim <nomos at ktug org>
 
 	Version 2.4

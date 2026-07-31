@@ -13,7 +13,7 @@
 % version 2006/05/20 or later.
 %
 
-\ProvidesPackage{konames-utf}[2015/07/06 v1.7 UTF-8 Hangul captions]
+\ProvidesPackage{konames-utf}[2026/07/31 v2.6 UTF-8 Hangul captions]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname if@hanja\endcsname\relax
@@ -136,5 +136,13 @@
     \vskip 3ex
     \@afterheading}
 }{}
+
+%%% adapt to latex-lab's section heading templates
+\IfInstanceExistsT{heading}{chapter}
+  {\EditInstance{heading}{chapter}{prefix={\KSTHE}, number-format={\thechapter~\chaptername}}
+   \AddToHook{cmd/appendix/after}
+     {\EditInstance{heading}{chapter}{prefix={\appendixname}, number-format={\thechapter}}}}
+\IfInstanceExistsT{heading}{part}
+  {\EditInstance{heading}{part}{prefix={\KSTHE}, number-format={\thepart~\partname}}}
 
 \endinput

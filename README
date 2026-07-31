@@ -1,4 +1,4 @@
-CJK-ko package version 2.5 (2024/03/01)
+CJK-ko package version 2.6 (2026/07/31)
 =======================================
 
 This package supports typesetting of modern Korean documents with the help
@@ -14,7 +14,7 @@ Author
 ------
 
 Please report any errors or suggestions to
-    Dohyun Kim <nomos at ktug org>
+    Dohyun Kim <nomosnomos at gmail com>
 or leave messages in the issue tracker at:
     <http://github.com/dohyunkim/cjk-ko>.
 

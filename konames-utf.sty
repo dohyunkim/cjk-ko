@@ -1,6 +1,6 @@
 % konames-utf.sty
 %
-% Copyright (C) 2007-2015 Koaunghi Un <koaunghi at kornet net>
+% Copyright (C) 2007-2026 Koaunghi Un <koaunghi at kornet net>
 %                         Kangsoo Kim <karnes at ktug or kr>
 %                         Dohyun Kim  <nomosnomos at gmail com>
 %
@@ -13,7 +13,7 @@
 % version 2006/05/20 or later.
 %
 
-\ProvidesPackage{konames-utf}[2026/07/31 v2.6 UTF-8 Hangul captions]
+\ProvidesPackage{konames-utf}[2026/11/01 v2.7 UTF-8 Hangul captions]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname if@hanja\endcsname\relax
@@ -138,11 +138,29 @@
 }{}
 
 %%% adapt to latex-lab's section heading templates
-\IfInstanceExistsT{heading}{chapter}
-  {\EditInstance{heading}{chapter}{prefix={\KSTHE}, number-format={\thechapter~\chaptername}}
-   \AddToHook{cmd/appendix/after}
-     {\EditInstance{heading}{chapter}{prefix={\appendixname}, number-format={\thechapter}}}}
-\IfInstanceExistsT{heading}{part}
-  {\EditInstance{heading}{part}{prefix={\KSTHE}, number-format={\thepart~\partname}}}
+\protected\def\koPseudoSpaceskip{\hskip\fontdimen2\font plus\fontdimen3\font minus\fontdimen4\font}
+% part
+\IfInstanceExistsT{headformat}{part}{\EditInstance{headformat}{part}{
+    order={number,separator-a,?,text,punct,separator-b,?,title,separator-c,subtitle},
+    separator-a=\koPseudoSpaceskip,
+}}
+\IfInstanceExistsT{heading}{part}{\EditInstance{heading}{part}{
+    number-format=\KSTHE\nobreak\koPseudoSpaceskip#1,
+}}
+% chapter
+\IfInstanceExistsT{headformat}{chapter}{\EditInstance{headformat}{chapter}{
+    order={number,separator-a,?,text,punct,separator-b,?,title,separator-c,subtitle},
+    separator-a=\koPseudoSpaceskip,
+  }\AddToHook{cmd/appendix/after}{\EditInstance{headformat}{chapter}{
+    order={text,separator-a,?,number,punct,separator-b,?,title,separator-c,subtitle},
+    separator-a=\nobreak\koPseudoSpaceskip,
+}}}
+\IfInstanceExistsT{heading}{chapter}{\EditInstance{heading}{chapter}{
+    text=\chaptername,
+    number-format=\KSTHE\nobreak\koPseudoSpaceskip#1,
+  }\AddToHook{cmd/appendix/after}{\EditInstance{heading}{chapter}{
+    text=\appendixname,
+    number-format=#1,
+}}}
 
 \endinput

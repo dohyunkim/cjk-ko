@@ -2,8 +2,11 @@
 
 	Version 2.7
 
-	* konames-utf.sty: adapt to latex-lab's section heading templates
-
+	* konames-utf.sty:
+	- adapt to latex-lab's new heading templates
+	- introduce \koPseudoSpaceskip command to ensure the same space width
+	before and after the heading number (used only for heading templates,
+	at least for now)
 
 2026-07-31      Dohyun Kim <nomosnomos at gmail com>
 

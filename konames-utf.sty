@@ -140,27 +140,20 @@
 %%% adapt to latex-lab's section heading templates
 \protected\def\koPseudoSpaceskip{\hskip\fontdimen2\font plus\fontdimen3\font minus\fontdimen4\font}
 % part
-\IfInstanceExistsT{headformat}{part}{\EditInstance{headformat}{part}{
-    order={number,separator-a,?,text,punct,separator-b,?,title,separator-c,subtitle},
-    separator-a=\koPseudoSpaceskip,
-}}
 \IfInstanceExistsT{heading}{part}{\EditInstance{heading}{part}{
-    number-format=\KSTHE\nobreak\koPseudoSpaceskip#1,
+    text=\NoValue,
+    number-format=\KSTHE\nobreak\koPseudoSpaceskip#1\koPseudoSpaceskip\partname,
+    punct-format=#1\pdffakespace\pdffakespace\hskip\z@skip,
 }}
 % chapter
-\IfInstanceExistsT{headformat}{chapter}{\EditInstance{headformat}{chapter}{
-    order={number,separator-a,?,text,punct,separator-b,?,title,separator-c,subtitle},
-    separator-a=\koPseudoSpaceskip,
-  }\AddToHook{cmd/appendix/after}{\EditInstance{headformat}{chapter}{
-    order={text,separator-a,?,number,punct,separator-b,?,title,separator-c,subtitle},
-    separator-a=\nobreak\koPseudoSpaceskip,
-}}}
 \IfInstanceExistsT{heading}{chapter}{\EditInstance{heading}{chapter}{
-    text=\chaptername,
-    number-format=\KSTHE\nobreak\koPseudoSpaceskip#1,
+    text=\NoValue,
+    number-format=\KSTHE\nobreak\koPseudoSpaceskip#1\koPseudoSpaceskip\chaptername,
+    punct-format=#1\pdffakespace\pdffakespace\hskip\z@skip,
   }\AddToHook{cmd/appendix/after}{\EditInstance{heading}{chapter}{
-    text=\appendixname,
-    number-format=#1,
+    text=\NoValue,
+    number-format=\appendixname\nobreak\koPseudoSpaceskip#1,
+    punct-format=#1\pdffakespace\pdffakespace\hskip\z@skip,
 }}}
 
 \endinput

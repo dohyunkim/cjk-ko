@@ -13,7 +13,7 @@
 % version 2006/05/20 or later.
 %
 
-\ProvidesPackage{konames-utf}[2026/11/01 v2.7 UTF-8 Hangul captions]
+\ProvidesPackage{konames-utf}[2026/??/?? v2.8 UTF-8 Hangul captions]
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname if@hanja\endcsname\relax
@@ -143,17 +143,23 @@
 \IfInstanceExistsT{heading}{part}{\EditInstance{heading}{part}{
     text=\NoValue,
     number-format=\KSTHE\nobreak\koPseudoSpaceskip#1\koPseudoSpaceskip\partname,
-    punct-format=#1\pdffakespace\pdffakespace\hskip\z@skip,
+    punct-format=#1\koDoubleSpaceChar,
 }}
 % chapter
 \IfInstanceExistsT{heading}{chapter}{\EditInstance{heading}{chapter}{
     text=\NoValue,
     number-format=\KSTHE\nobreak\koPseudoSpaceskip#1\koPseudoSpaceskip\chaptername,
-    punct-format=#1\pdffakespace\pdffakespace\hskip\z@skip,
+    punct-format=#1\koDoubleSpaceChar,
   }\AddToHook{cmd/appendix/after}{\EditInstance{heading}{chapter}{
     text=\NoValue,
     number-format=\appendixname\nobreak\koPseudoSpaceskip#1,
-    punct-format=#1\pdffakespace\pdffakespace\hskip\z@skip,
+    punct-format=#1\koDoubleSpaceChar,
 }}}
+% no pdffakespace in dvi mode
+\let\koDoubleSpaceChar\relax
+\ifnum 0\ifdefined\outputmode \the\outputmode \else
+        \ifdefined\pdfoutput  \the\pdfoutput  \fi\fi > \z@
+  \protected\def\koDoubleSpaceChar{\pdffakespace\pdffakespace\hskip\z@skip}
+\fi
 
 \endinput
